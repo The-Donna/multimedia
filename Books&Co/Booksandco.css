@@ -280,3 +280,14 @@ body {
 img {
   border-radius: 25px;
 }
+
+.content2 {
+  font-family: Georgia, sans-serif, serif;
+  padding: 1%;
+  min-height: 50px;
+  width: 100%;
+  background-color: #FFFAEC;
+  border-radius: 25px;
+  overflow: hidden;
+  text-align: center;
+}
