@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="Booksandco.css">
+    <link rel="stylesheet" type="text/css" href="genre.css">
     <title>Comedy</title>
 </head>
 <body>
@@ -88,6 +89,21 @@
         window.onload = searchFictionBooks;
     </script>
 
+    <div id="moviesresults"></div>
+    <script>
+        const API_KEY = 'removed';
+        const query = 'comedy';
+
+        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`)
+        .then(res => res.json())
+        .then(data => {
+        data.results.forEach(movie => {
+            console.log('Title:', movie.title);
+            console.log('Summary:', movie.overview);
+        });
+  });
+
+    </script>
     
 <div id="footer">
 
