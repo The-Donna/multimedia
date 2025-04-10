@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="Booksandco.css">
+    <title>FAQ</title>
+
+    <script>
+        function drop(answerID) {
+            var ans = document.getElementById('answer' + answerID);
+            if (ans.style.display == "none" ) {
+                ans.style.display = "block";
+            } else {
+                ans.style.display = "none";
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <div id="nav">
+        <img src="Logo.png" alt="logo">
+        <ul>
+                <li class="home"><a href="Home.html">Home</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
+                <li><a href="Contact.html">Contact</a></li>
+                <li><a href="About.html">About</a></li> 
+                <li class="dropdown">
+                        <a href="Genre.html">Genre ▼</a>
+                        <ul class="dropdown">
+                            <li><a href="Fiction.html">Fiction</a></li>
+                            <li><a href="Horror.html">Horror</a></li>
+                            <li><a href="Romance.html">Romance</a></li>
+                            <li><a href="Thriller.html">Action/Thriller</a></li>
+                            <li><a href="Comedy.html">Comedy</a></li>
+                        </ul>
+                    </li> 
+                    
+        </ul>
+
+            <h1 class="one" > Frequently Asked Questions </h1>
+
+    <p class="question" onclick="drop(1)"> Where can I find some books to read or movies to watch? </p>
+    <p class="answer" id="answer1" > You can hover on the "Genre" button in the top left of the page, where you will see a menu that leads to a variety of books and movies to enjoy! </p>
+
+    <p class="question" onclick="drop(2)"> Can I search for a book I've seen before? </p>
+    <p class="answer" id="answer2" > Yes! On the "Home" page, we have a search bar where you can type in the name of a book you know or keywords to find others similar. </p>
+
+    <p class="question" onclick="drop(3)"> What if I don't know what to read or watch? </p>
+    <p class="answer" id="answer3" > We have made a generator for both books and movies for those who aren't sure what to watch or read or are simply feeling adventurous for something new! </p>
+
+    <p class="question" onclick="drop(4)"> How can I see who made the website? </p>
+    <p class="answer" id="answer4" > You can click on the "About" button in the navigation bar to learn more about the developers and our backstory! </p>
+
+    <p class="question" onclick="drop(5)"> How can I reach out and send a message about an issue or suggestion? </p>
+    <p class="answer" id="answer5" > You can reach us through our Contact Form. Click on the "Contact" button in the navigation bar and fill out the form, or use the Google Form if preferred. </p>
+
+
+
+  </body>
