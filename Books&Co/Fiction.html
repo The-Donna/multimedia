@@ -4,98 +4,157 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="Booksandco.css">
+    <link rel="stylesheet" type="text/css" href="genre.css">
     <title>Comedy</title>
 </head>
 <body>
-    <div id="nav">
-        <img src="Logo.png" alt="logo">
-        <ul>
-                <li class="home"><a href="Home.html">Home</a></li>
-                <li><a href="About.html">About</a></li> 
-                <li class="dropdown">
-                        <a href="Genre.html">Genre ▼</a>
-                        <ul class="dropdown">
-                            <li><a href="Fiction.html">Fiction</a></li>
-                            <li><a href="Horror.html">Horror</a></li>
-                            <li><a href="Romance.html">Romance</a></li>
-                            <li><a href="Thriller.html">Action/Thriller</a></li>
-                            <li><a href="Comedy.html">Comedy</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="Contact.html">Contact</a></li>  
-                    
-        </ul>
-    <div id="results"></div>
-    <script>
-        const apiKey = 'AIzaSyBrXyc5lfr3wRJR70zr65Kh0tm7fPIU2oM'; 
+    <div class="header-container">
+        <div class="image-container">
+          <img src="Logo.png" alt="logo">
+        </div>
+        <div id="nav">
+          <ul>
+            <li class="home"><a href="Index.html">Home</a></li>
+            <li class="dropdown">
+                <a href="Genre.html">Genre ▼</a>
+                <ul class="dropdown">
+                  <li><a href="Fiction.html">Fiction</a></li>
+                  <li><a href="Horror.html">Horror</a></li>
+                  <li><a href="Romance.html">Romance</a></li>
+                  <li><a href="Thriller.html">Action/Thriller</a></li>
+                  <li><a href="Comedy.html">Comedy</a></li>
+                </ul>
+              </li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Contact.html">Contact</a></li>
+            <li><a href="FAQ.html">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
 
-        async function searchFictionBooks() {
-            const genre = 'fiction'; 
-            const url = `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&key=${apiKey}&_=${Date.now()}`;
+    <div class="container">
+        <div id="results"></div>
+        <script>
+            const apiKey = 'AIzaSyBrXyc5lfr3wRJR70zr65Kh0tm7fPIU2oM'; // Replace with your actual API key
 
-            try {
-                console.log("Fetching from URL:", url);
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const data = await response.json();
-                console.log("API Response:", data);
-                const books = data.items || [];
-                displayResults(books);
-            } catch (error) {
-                console.error("Error fetching book data:", error);
-                document.getElementById('results').innerHTML = `<p style="color:red;">Error fetching book data: ${error.message}</p>`;
-            }
-        }
-
-        function displayResults(books) {
-            const resultsDiv = document.getElementById('results');
-            if (!resultsDiv) {
-                console.error("Error: 'results' div not found!");
-                return;
-            }
-            resultsDiv.innerHTML = '';
-            if (!books || books.length === 0) {
-                resultsDiv.innerHTML = "<p>No fiction books found.</p>";
-                return;
-            }
-            books.forEach(book => {
-                const title = book.volumeInfo?.title || "No title available";
-                const authors = book.volumeInfo?.authors ? book.volumeInfo?.authors.join(", ") : "Unknown author";
-                const thumbnail = book.volumeInfo?.imageLinks?.thumbnail || "https://via.placeholder.com/128x200";
-                const infoLink = book.volumeInfo?.infoLink;
-
-                const bookElement = document.createElement('div');
-                bookElement.innerHTML = `
-                    <img src="${thumbnail}" alt="${title}">
-                    <h3>${title}</h3>
-                    <p><strong>Author(s):</strong> ${authors}</p>
-                `;
-
-                bookElement.addEventListener('click', () => {
-                    if (infoLink) {
-                        window.open(infoLink, '_blank');
-                    } else {
-                        alert("No info link available for this book.");
+            async function searchFictionBooks() {
+                const genre = 'fiction'; // The genre you want to search
+                const maxResults = 20;
+                const url = `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&key=${apiKey}&maxResults=${maxResults}&_=${Date.now()}`;
+                try {
+                    console.log("Fetching from URL:", url);
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
                     }
+                    const data = await response.json();
+                    console.log("API Response:", data);
+                    const books = data.items || [];
+                    displayResults(books);
+                } catch (error) {
+                    console.error("Error fetching book data:", error);
+                    document.getElementById('results').innerHTML = `<p style="color:red;">Error fetching book data: ${error.message}</p>`;
+                }
+            }
+
+            function displayResults(books) {
+                const resultsDiv = document.getElementById('results');
+                if (!resultsDiv) {
+                    console.error("Error: 'results' div not found!");
+                    return;
+                }
+                resultsDiv.innerHTML = '';
+                if (!books || books.length === 0) {
+                    resultsDiv.innerHTML = "<p>No fiction books found.</p>";
+                    return;
+                }
+                books.forEach(book => {
+                    const title = book.volumeInfo?.title || "No title available";
+                    const authors = book.volumeInfo?.authors ? book.volumeInfo?.authors.join(", ") : "Unknown author";
+                    const thumbnail = book.volumeInfo?.imageLinks?.thumbnail || "https://via.placeholder.com/128x200";
+                    const description = book.volumeInfo?.description || "No description available";
+                    const infoLink = book.volumeInfo?.infoLink;
+
+                    const bookElement = document.createElement('div');
+                    bookElement.innerHTML = `
+                        <img src="${thumbnail}" alt="${title}">
+                        <h3>${title}</h3>
+                        <p><strong>Author(s):</strong> ${authors}</p>
+                        <p><strong>Description:</strong> ${description.substring(0, 300)}...</p> <!-- Limit description length -->
+                    `;
+
+                    bookElement.addEventListener('click', () => {
+                        if (infoLink) {
+                            window.open(infoLink, '_blank');
+                        } else {
+                            alert("No info link available for this book.");
+                        }
+                    });
+
+                    resultsDiv.appendChild(bookElement);
                 });
+            }
 
-                resultsDiv.appendChild(bookElement);
+            window.onload = searchFictionBooks;
+        </script>
+
+        <div id="moviesresults"></div>
+        <script>
+            const API_KEY = 'removed'; 
+            const genreId = 35; // Comedy
+        
+            fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&sort_by=popularity.desc`)
+            .then(response => response.json())
+            .then(data => {
+                const movieList = document.getElementById('moviesresults');
+                if (data.results && data.results.length > 0) {
+                    data.results.forEach(movie => {
+                        const movieDiv = document.createElement('div');
+                        
+                        // Get poster image URL
+                        const posterUrl = movie.poster_path 
+                            ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` 
+                            : 'https://via.placeholder.com/200x300';
+        
+                        // Get release year
+                        const releaseYear = movie.release_date ? movie.release_date.split('-')[0] : 'Unknown';
+        
+                        // Get main cast (using the first 3 actors)
+                        const cast = movie.cast ? movie.cast.slice(0, 3).map(actor => actor.name).join(", ") : "Unknown cast";
+        
+                        // Shorten overview to 150 characters
+                        const overview = movie.overview ? movie.overview.slice(0, 150) + '...' : 'No overview available';
+        
+                        // Create the movie element
+                        movieDiv.innerHTML = `
+                            <div class="movie-card">
+                                <img src="${posterUrl}" alt="${movie.title}" class="movie-poster">
+                                <h3>${movie.title}</h3>
+                                <p><strong>Release Year:</strong> ${releaseYear}</p>
+                                <p><strong>Cast:</strong> ${cast}</p>
+                                <p><strong>Overview:</strong> ${overview}</p>
+                            </div>
+                        `;
+                        movieList.appendChild(movieDiv);
+                    });
+                } else {
+                    movieList.innerHTML = '<p>No movies found.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                document.getElementById('moviesresults').innerHTML = '<p>Error loading movies.</p>';
             });
-        }
+        </script>
+    </div>
 
-        window.onload = searchFictionBooks;
-    </script>
+    <div id="footer">
 
-    
-<div id="footer">
+        <h2>Books &amp; Co</h2>
 
-    <h2>Books &amp; Co</h2>
+        <p>&#169; 2025 Co. All Rights Reserved.
 
-    <p>&#169; 2025 Co. All Rights Reserved.
-
-</div>
+    </div>
 </body>
 </html>
 </body>

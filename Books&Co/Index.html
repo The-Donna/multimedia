@@ -14,33 +14,33 @@
 </head>
 
 <body>
-    <div id="nav">
-        <img src="Logo.png" alt="logo">
-        <ul>
-                <li class="home"><a href="Index.html">Home</a></li>
-                <li><a href="FAQ.html">FAQ</a></li>
-                <li><a href="Contact.html">Contact</a></li>
-                <li><a href="About.html">About</a></li> 
-                <li class="dropdown">
-                        <a href="Genre.html">Genre ▼</a>
-                        <ul class="dropdown">
-                            <li><a href="Fiction.html">Fiction</a></li>
-                            <li><a href="Horror.html">Horror</a></li>
-                            <li><a href="Romance.html">Romance</a></li>
-                            <li><a href="Thriller.html">Action/Thriller</a></li>
-                            <li><a href="Comedy.html">Comedy</a></li>
-                        </ul>
-                    </li> 
-                    
-        </ul>
-
-<div id="search">
-            <input type="text" id="searchBox" placeholder="Search..." name="q">
-            <button type="button" onclick="searchBook()">Search</button>
+    <div class="header-container">
+        <div class="image-container">
+          <img src="Logo.png" alt="logo">
         </div>
-       
-
+        <div id="nav">
+          <ul>
+            <li class="home"><a href="Index.html">Home</a></li>
+            <div id="search">
+                <input type="text" id="searchBox" placeholder="Search..." name="q">
+                <button type="button" onclick="searchBook()">Search</button>
+            </div>
+            <li class="dropdown">
+                <a href="Genre.html">Genre ▼</a>
+                <ul class="dropdown">
+                  <li><a href="Fiction.html">Fiction</a></li>
+                  <li><a href="Horror.html">Horror</a></li>
+                  <li><a href="Romance.html">Romance</a></li>
+                  <li><a href="Thriller.html">Action/Thriller</a></li>
+                  <li><a href="Comedy.html">Comedy</a></li>
+                </ul>
+              </li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Contact.html">Contact</a></li>
+            <li><a href="FAQ.html">FAQ</a></li>
+          </ul>
         </div>
+      </div>
 
         <section class="start">
             <h1>Discover Amazing Books & Movies</h1>

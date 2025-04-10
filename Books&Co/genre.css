@@ -1,20 +1,26 @@
 /* Container styling */
-#results {
+.container {
+    display: flex;
+    justify-content: space-between; /* or use space-around / flex-start depending on your needs */
+    gap: 50px;
+    padding: 30px;
+}
+
+#results, #moviesresults {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Keeps the grid layout */
     gap: 20px;
     padding: 30px;
-    width: 40%;
-
-    background-color: #F5ECD5;
+    width: 50%;
+    height: auto;
+    background-color: #578E7E;
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
-/* Book card styling */
-#results div {
-    background-color: #578E7E;
-    border: 1px solid #ddd;
+/* Movie card styling */
+#moviesresults div {
+    background-color: #F5ECD5;
     border-radius: 12px;
     padding: 15px;
     text-align: center;
@@ -22,16 +28,20 @@
     cursor: pointer;
 }
 
-/* Hover effect */
-#results div:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+/* Book card styling */
+#results div {
+    background-color: #F5ECD5 ;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
 }
 
 /* Image */
 #results img {
-    width: 128px;
-    height: 200px;
+    width: 100%;
+    height: auto;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 10px;
@@ -51,3 +61,37 @@
     margin: 0;
 }
 
+#results div p {
+    font-size: 15px;
+    color: #555;
+}
+
+
+/* Movie Poster */
+#moviesresults img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Title */
+#moviesresults h3 {
+    font-size: 16px;
+    margin: 10px 0 5px;
+    color: #333;
+}
+
+/* Movie Details (Release year, cast, etc.) */
+#moviesresults p {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0;
+}
+
+/* Movie Card Specific Styling Adjustments */
+#moviesresults div p {
+    font-size: 15px;
+    color: #555;
+}
