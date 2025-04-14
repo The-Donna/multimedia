@@ -33,13 +33,14 @@
       </div>
 
     <div class="container">
+        <h1>Books</h1>
         <div id="results"></div>
         <script>
             const apiKey = 'AIzaSyBrXyc5lfr3wRJR70zr65Kh0tm7fPIU2oM'; // Replace with your actual API key
 
             async function searchFictionBooks() {
                 const genre = 'fiction'; // The genre you want to search
-                const maxResults = 20;
+                const maxResults = 24;
                 const url = `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&key=${apiKey}&maxResults=${maxResults}&_=${Date.now()}`;
                 try {
                     console.log("Fetching from URL:", url);
@@ -97,35 +98,57 @@
 
             window.onload = searchFictionBooks;
         </script>
+        
+        <br>
+        <br>
 
+        <h1>Movies</h1>
         <div id="moviesresults"></div>
         <script>
             const API_KEY = 'removed'; 
             const genreId = 35; // Comedy
-        
-            fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&sort_by=popularity.desc`)
-            .then(response => response.json())
-            .then(data => {
+            const MOVIES_TO_FETCH = 24;
+
+            async function fetchExactlyMovies(limit) {
+                let allResults = [];
+                let page = 1;
+
+                while (allResults.length < limit) {
+                    const url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&sort_by=popularity.desc&page=${page}`;
+                    try {
+                        const response = await fetch(url);
+                        const data = await response.json();
+                        if (data.results && data.results.length > 0) {
+                            allResults = allResults.concat(data.results);
+                        } else {
+                            break; // no more results
+                        }
+                    } catch (error) {
+                        console.error(`Error fetching page ${page}:`, error);
+                        break;
+                    }
+                    page++;
+                }
+
+                return allResults.slice(0, limit);
+            }
+
+            function displayMovies(movies) {
                 const movieList = document.getElementById('moviesresults');
-                if (data.results && data.results.length > 0) {
-                    data.results.forEach(movie => {
+                movieList.innerHTML = '';
+
+                if (movies.length > 0) {
+                    movies.forEach(movie => {
                         const movieDiv = document.createElement('div');
-                        
-                        // Get poster image URL
+
                         const posterUrl = movie.poster_path 
                             ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` 
                             : 'https://via.placeholder.com/200x300';
-        
-                        // Get release year
+
                         const releaseYear = movie.release_date ? movie.release_date.split('-')[0] : 'Unknown';
-        
-                        // Get main cast (using the first 3 actors)
-                        const cast = movie.cast ? movie.cast.slice(0, 3).map(actor => actor.name).join(", ") : "Unknown cast";
-        
-                        // Shorten overview to 150 characters
+                        const cast = "Cast data unavailable";
                         const overview = movie.overview ? movie.overview.slice(0, 150) + '...' : 'No overview available';
-        
-                        // Create the movie element
+
                         movieDiv.innerHTML = `
                             <div class="movie-card">
                                 <img src="${posterUrl}" alt="${movie.title}" class="movie-poster">
@@ -135,17 +158,19 @@
                                 <p><strong>Overview:</strong> ${overview}</p>
                             </div>
                         `;
+
                         movieList.appendChild(movieDiv);
                     });
                 } else {
                     movieList.innerHTML = '<p>No movies found.</p>';
                 }
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                document.getElementById('moviesresults').innerHTML = '<p>Error loading movies.</p>';
-            });
+            }
+
+            // Run it
+            fetchExactlyMovies(MOVIES_TO_FETCH).then(displayMovies);
         </script>
+
+
     </div>
 
     <div id="footer">

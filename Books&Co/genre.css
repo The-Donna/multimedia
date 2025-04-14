@@ -1,6 +1,6 @@
 /* Container styling */
 .container {
-    display: flex;
+    display: block;
     justify-content: space-between; /* or use space-around / flex-start depending on your needs */
     gap: 50px;
     padding: 30px;
@@ -11,7 +11,7 @@
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Keeps the grid layout */
     gap: 20px;
     padding: 30px;
-    width: 50%;
+    width: 95%;
     height: auto;
     background-color: #578E7E;
     border-radius: 16px;
@@ -94,4 +94,11 @@
 #moviesresults div p {
     font-size: 15px;
     color: #555;
+}
+
+h1 {
+   font-size: 40px;
+   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+   color: #578E7E; 
+   text-align: center;
 }
