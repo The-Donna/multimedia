@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -8,40 +7,40 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" type="text/css" href="Booksandco.css">
-        
-        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
         <title>Books&Co</title>
 </head>
 
 <body>
-    <div class="header-container">
-        <div class="image-container">
-          <img src="Logo.png" alt="logo">
-        </div>
-        <div id="nav">
-          <ul>
-            <a href="http://localhost:3000">Sign up/Login</a></li> 
-            <!-- <li class="home"><a href="Index.html">Home</a></li> -->
-             <div id="search">
-                <input type="text" id="searchBox" placeholder="Search..." name="q">
-                <button type="button" onclick="searchBook()">Search</button>
-            </div>
-            <li class="dropdown">
-                <a href="Genre.html">Genre ▼</a>
-                <ul class="dropdown">
-                  <li><a href="Fiction.html">Fiction</a></li>
-                  <li><a href="Horror.html">Horror</a></li>
-                  <li><a href="Romance.html">Romance</a></li>
-                  <li><a href="Thriller.html">Action/Thriller</a></li>
-                  <li><a href="Comedy.html">Comedy</a></li>
-                </ul>
+        <div class="nav-container">
+          <div class="nav-left">
+            <a href="Index.html"><img src="Logo.png" alt="logo"></a>
+          </div>
+          <ul class="nav-right">
+              <li><a href="http://localhost:3000">Sign up/Login</a></li>
+              <li id="search" class="search-container">
+                  <button id="searchToggle" aria-label="Search">
+                      <i class="fas fa-search"></i>
+                  </button>
+                  <input type="text" id="searchBox" placeholder="Search..." name="q">
               </li>
-            <li><a href="About.html">About</a></li>
-            <li><a href="Contact.html">Contact</a></li>
-            <li><a href="FAQ.html">FAQ</a></li>
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle">Genre ▼</a>
+                  <ul class="dropdown-menu">
+                      <li><a href="Fiction.html">Fiction</a></li>
+                      <li><a href="Horror.html">Horror</a></li>
+                      <li><a href="Romance.html">Romance</a></li>
+                      <li><a href="Thriller.html">Action/Thriller</a></li>
+                      <li><a href="Comedy.html">Comedy</a></li>
+                  </ul>
+              </li>
+              <li><a href="About.html">About</a></li>
+              <li><a href="Contact.html">Contact</a></li>
+              <li><a href="FAQ.html">FAQ</a></li>
           </ul>
         </div>
-      </div>
+
 
         <section class="start">
             <h1>Discover Amazing Books & Movies</h1>
@@ -49,40 +48,42 @@
         </section>
 
         <section class="random">
-        <div class="card" id="bookCard">
-            <h2 class="section-title">Generated Books</h2>
-            <div class="arrows">
-                <span class="arrow" onclick="showRandomBook('prev')">←</span>
-                <span class="arrow" onclick="showRandomBook('next')">→</span>
+          <div id="booksGenerator">
+            <h1>📖 Books</h1>
+            <div id="book-card" class="card">
+              <p>Loading book...</p>
             </div>
-            <div id="bookImages">
-              
+          </div>
+        
+          <div id="movieGenerator">
+            <h1>🎬 Movies</h1>
+            <div id="movie-Card" class="movie-card">
+              <p>Loading movie...</p>
             </div>
-        </div>
-
-        <div class="card" id="movieCard">
-            <h2 class="section-title">Generated Movies</h2>
-            <div class="arrows">
-                <span class="arrow" onclick="showRandomMovie('prev')">←</span>
-                <span class="arrow" onclick="showRandomMovie('next')">→</span>
-            </div>
-            <div id="movieImages">
-             
-            </div>
-        </div>
-
-            <section class="random">
-            <div class="card" id="bookCard">
-            <h2 class="section-title">Search Results</h2>
-            <div id="randomBookDisplay">
-            <h3 id="randomBookTitle"></h3>
-            <p id="randomBookAuthors"></p>
-            <img id="randomBookThumbnail" src="" alt="">
-            </div>
-            </div>
-            
-        <div id="results"></div>
+          </div>
         </section>
+        
+
+        <div id="searchresults"></div>
+        </section>
+
+        <script>
+          document.getElementById('searchToggle').addEventListener('click', () => {
+              const searchBox = document.getElementById('searchBox');
+              searchBox.classList.toggle('expanded');
+              if (searchBox.classList.contains('expanded')) {
+                  searchBox.focus();
+              }
+          });
+  
+          document.querySelector('.dropdown-toggle').addEventListener('click', (e) => {
+              e.preventDefault();
+              document.querySelector('.dropdown-menu').classList.toggle('show');
+          });
+      </script>
+
+        <br>
+        <br>
 
         <div id="footer">
 
@@ -91,6 +92,7 @@
             <p>&#169; 2025 Co. All Rights Reserved.</p>
 
         </div>
-        <script src="Booksandco.js"></script>
+        <script src="bookgenerator.js"></script>
+        <script src="moviegenerator.js"></script>
 </body>
 </html>

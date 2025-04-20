@@ -18,6 +18,18 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
+#searchresults {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Keeps the grid layout */
+    gap: 20px;
+    padding: 30px;
+    width: 95%;
+    height: auto;
+    background-color: #578E7E;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
 /* Movie card styling */
 #moviesresults div {
     background-color: #F5ECD5;

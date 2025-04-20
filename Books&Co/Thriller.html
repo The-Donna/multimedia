@@ -5,31 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="Booksandco.css">
     <link rel="stylesheet" type="text/css" href="genre.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Comedy</title>
 </head>
 <body>
-    <div class="header-container">
-        <div class="image-container">
-          <img src="Logo.png" alt="logo">
+    <div class="nav-container">
+        <div class="nav-left">
+            <a href="Index.html"><img src="Logo.png" alt="logo"></a>
         </div>
-        <div id="nav">
-          <ul>
-            <li class="home"><a href="Index.html">Home</a></li>
+        <ul class="nav-right">
+            <li><a href="Index.html">Home</a></li>
+            <li id="search" class="search-container">
+                <button id="searchToggle" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+                <input type="text" id="searchBox" placeholder="Search..." name="q">
+            </li>
             <li class="dropdown">
-                <a href="Genre.html">Genre ▼</a>
-                <ul class="dropdown">
-                  <li><a href="Fiction.html">Fiction</a></li>
-                  <li><a href="Horror.html">Horror</a></li>
-                  <li><a href="Romance.html">Romance</a></li>
-                  <li><a href="Thriller.html">Action/Thriller</a></li>
-                  <li><a href="Comedy.html">Comedy</a></li>
+                <a href="#" class="dropdown-toggle">Genre ▼</a>
+                <ul class="dropdown-menu">
+                    <li><a href="Fiction.html">Fiction</a></li>
+                    <li><a href="Horror.html">Horror</a></li>
+                    <li><a href="Romance.html">Romance</a></li>
+                    <li><a href="Thriller.html">Action/Thriller</a></li>
+                    <li><a href="Comedy.html">Comedy</a></li>
                 </ul>
-              </li>
+            </li>
             <li><a href="About.html">About</a></li>
             <li><a href="Contact.html">Contact</a></li>
             <li><a href="FAQ.html">FAQ</a></li>
-          </ul>
-        </div>
+        </ul>
       </div>
 
     <div class="container">
@@ -150,7 +155,7 @@
                         const overview = movie.overview ? movie.overview.slice(0, 150) + '...' : 'No overview available';
 
                         movieDiv.innerHTML = `
-                            <div class="movie-card">
+                            <div class="movieard">
                                 <img src="${posterUrl}" alt="${movie.title}" class="movie-poster">
                                 <h3>${movie.title}</h3>
                                 <p><strong>Release Year:</strong> ${releaseYear}</p>
@@ -172,6 +177,13 @@
 
 
     </div>
+
+    <script>
+        document.querySelector('.dropdown-toggle').addEventListener('click', (e) => {
+              e.preventDefault();
+              document.querySelector('.dropdown-menu').classList.toggle('show');
+          });
+    </script>
 
     <div id="footer">
 
