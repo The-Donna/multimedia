@@ -3,18 +3,66 @@
 <head>
   <title>Sign Up</title>
   <link rel="stylesheet" href="/style.css">
+  <style>
+    #strengthMeter {
+      height: 6px;
+      width: 100%;
+      background: #ccc;
+      margin-top: 5px;
+      border-radius: 3px;
+    }
+    #strengthText {
+      font-size: 0.85rem;
+      color: #333;
+      margin-top: 4px;
+      display: block;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h2>Sign Up</h2>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div style="color: red; margin-bottom: 10px;"><%= error %></div>
+    <% } %>
+
     <form action="/auth/signup" method="POST">
       <input name="username" placeholder="Name" required>
       <input name="email" type="email" placeholder="Email" required>
-      <input name="password" type="password" placeholder="Password" required>
+      
+      <input id="password" name="password" type="password" placeholder="Password" required>
+      <div id="strengthMeter"></div>
+      <small id="strengthText"></small>
+
       <button type="submit">Sign Up</button>
     </form>
+
     <a href="/auth/google">Sign up with Google</a>
     <a href="/login">Already have an account? Login</a>
   </div>
+
+  <script>
+    const password = document.getElementById("password");
+    const strengthMeter = document.getElementById("strengthMeter");
+    const strengthText = document.getElementById("strengthText");
+
+    password.addEventListener("input", () => {
+      const val = password.value;
+      let strength = 0;
+
+      if (val.length >= 6) strength++;
+      if (/[A-Z]/.test(val)) strength++;
+      if (/[0-9]/.test(val)) strength++;
+      if (/[^A-Za-z0-9]/.test(val)) strength++;
+      if (val.length >= 10) strength++;
+
+      const colors = ["#ff4d4d", "#ff9933", "#ffff66", "#99cc00", "#00cc66"];
+      const messages = ["Very Weak", "Weak", "Fair", "Good", "Strong"];
+
+      strengthMeter.style.background = colors[strength];
+      strengthText.innerText = messages[strength];
+    });
+  </script>
 </body>
 </html>
