@@ -7,6 +7,44 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>FAQ</title>
 
+    <style>
+        .answer {
+            display: none;
+        }
+
+        .question {
+            font-family: Georgia, sans-serif, serif;
+            padding: 1%;
+            min-height: 35px;
+            width: 100%;
+            background-color: #FFFAEC;
+            border-radius: 25px;
+            overflow: hidden;
+        
+        }
+        .answer {
+            font-family: Georgia, sans-serif, serif;
+            padding: 1%;
+            min-height: 30px;
+            width: 100%;
+            background-color: #FFFAEC;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+
+        #footer {
+            text-decoration: none;
+            color: #F5ECD5; 
+            font-size: 11px;
+            font-family: Georgia, sans-serif, serif;
+            background-color: #578E7E;
+            text-align: center;
+            padding: 5px;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+
     <script>
         function drop(answerID) {
             var ans = document.getElementById('answer' + answerID);
@@ -50,19 +88,19 @@
 
         <h1 class="one" > Frequently Asked Questions </h1>
 
-        <p class="question" onclick="drop(1)"> Where can I find some books to read or movies to watch? </p>
+        <p class="question" onclick="drop(1)"> <strong>Where can I find some books to read or movies to watch?</strong> </p>
         <p class="answer" id="answer1" > You can hover on the "Genre" button in the top left of the page, where you will see a menu that leads to a variety of books and movies to enjoy! </p>
 
-        <p class="question" onclick="drop(2)"> Can I search for a book I've seen before? </p>
+        <p class="question" onclick="drop(2)"> <strong>Can I search for a book I've seen before?</strong> </p>
         <p class="answer" id="answer2" > Yes! On the "Home" page, we have a search bar where you can type in the name of a book you know or keywords to find others similar. </p>
 
-        <p class="question" onclick="drop(3)"> What if I don't know what to read or watch? </p>
+        <p class="question" onclick="drop(3)"> <strong>What if I don't know what to read or watch?</strong> </p>
         <p class="answer" id="answer3" > We have made a generator for both books and movies for those who aren't sure what to watch or read or are simply feeling adventurous for something new! </p>
 
-        <p class="question" onclick="drop(4)"> How can I see who made the website? </p>
+        <p class="question" onclick="drop(4)"> <strong>How can I see who made the website?</strong> </p>
         <p class="answer" id="answer4" > You can click on the "About" button in the navigation bar to learn more about the developers and our backstory! </p>
 
-        <p class="question" onclick="drop(5)"> How can I reach out and send a message about an issue or suggestion? </p>
+        <p class="question" onclick="drop(5)"> <strong>How can I reach out and send a message about an issue or suggestion?</strong> </p>
         <p class="answer" id="answer5" > You can reach us through our Contact Form. Click on the "Contact" button in the navigation bar and fill out the form, or use the Google Form if preferred. </p>
 
       <script>
