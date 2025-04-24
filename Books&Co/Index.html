@@ -13,6 +13,7 @@
 </head>
 
 <body>
+      <div id="homepage">
         <div class="nav-container">
           <div class="nav-left">
             <a href="Index.html"><img src="Logo.png" alt="logo"></a>
@@ -41,58 +42,90 @@
           </ul>
         </div>
 
+          <section class="start">
+              <h1>Discover Amazing Books & Movies</h1>
+              <p>Explore the best stories from around the world</p>    
+          </section>
 
-        <section class="start">
-            <h1>Discover Amazing Books & Movies</h1>
-            <p>Explore the best stories from around the world</p>    
-        </section>
-
-        <section class="random">
-          <div id="booksGenerator">
-            <h1>📖 Books</h1>
-            <div id="book-card" class="card">
-              <p>Loading book...</p>
+          <section class="random">
+            <div id="booksGenerator">
+              <h1>📖 Books</h1>
+              <div id="book-card" class="card">
+                <p>Loading book...</p>
+              </div>
             </div>
-          </div>
-        
-          <div id="movieGenerator">
-            <h1>🎬 Movies</h1>
-            <div id="movie-Card" class="movie-card">
-              <p>Loading movie...</p>
+          
+            <div id="movieGenerator">
+              <h1>🎬 Movies</h1>
+              <div id="movie-Card" class="movie-card">
+                <p>Loading movie...</p>
+              </div>
             </div>
-          </div>
-        </section>
-        
+          </section>
 
-        <div id="searchresults"></div>
-        </section>
-
-        <script>
-          document.getElementById('searchToggle').addEventListener('click', () => {
-              const searchBox = document.getElementById('searchBox');
-              searchBox.classList.toggle('expanded');
-              if (searchBox.classList.contains('expanded')) {
-                  searchBox.focus();
-              }
-          });
-  
-          document.querySelector('.dropdown-toggle').addEventListener('click', (e) => {
-              e.preventDefault();
-              document.querySelector('.dropdown-menu').classList.toggle('show');
-          });
-      </script>
-
-        <br>
-        <br>
-
-        <div id="footer">
+          <div id="footer">
 
             <h2>Books &amp; Co</h2>
 
             <p>&#169; 2025 Co. All Rights Reserved.</p>
 
         </div>
+      </div>
+        
+
+        <div id="resultspage" class="page">
+          <button id="backButton">← Back</button>
+          <h2 style="font-size: 30px; color: #578E7E; text-align: center;">Search Results</h2>
+          <div id="results" class="resultscontainer"></div>
+        </div>
+ 
+      <script>
+        const searchToggle = document.getElementById('searchToggle');
+        const searchBox = document.getElementById('searchBox');
+        const homepage = document.getElementById('homepage');
+        const resultspage = document.getElementById('resultspage');
+        const resultscontainer = document.getElementById('results');
+        const backButton = document.getElementById('backButton');
+
+        searchToggle.addEventListener('click', () => {
+          searchBox.classList.toggle('expanded');
+          if (searchBox.classList.contains('expanded')) {
+            searchBox.focus();
+          }
+        });
+
+        // Trigger search on Enter key
+        searchBox.addEventListener('keydown', async (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            const query = searchBox.value.trim();
+            if (!query) return;
+
+            homepage.classList.add('slide-left');
+            resultspage.classList.add('active');
+
+            const results = await searchMedia(query);
+            displayResults(results);
+          }
+        });
+
+        // Back button logic
+        backButton.addEventListener('click', () => {
+          homepage.classList.remove('slide-left');
+          resultspage.classList.remove('active');
+          searchBox.value = '';
+          resultscontainer.innerHTML = '';
+        });
+
+        document.querySelector('.dropdown-toggle').addEventListener('click', (e) => {
+              e.preventDefault();
+              document.querySelector('.dropdown-menu').classList.toggle('show');
+          });
+
+      </script>
+
         <script src="bookgenerator.js"></script>
         <script src="moviegenerator.js"></script>
+        <script src="searchresults.js"></script>
 </body>
 </html>
