@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const User = require('../models/User');
 
@@ -16,11 +16,19 @@ router.post('/signup', async (req, res) => {
   res.redirect('/login');
 });
 
-// Login (handled by passport-local strategy)
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/home',
-  failureRedirect: '/login'
-}));
+router.post('/login', (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.send('Please enter both email and password.');
+  }
+
+  passport.authenticate('local', {
+    successRedirect: '/home',
+    failureRedirect: '/login'
+  })(req, res, next);
+});
+
 
 // Google Auth
 router.get('/google', passport.authenticate('google', {
