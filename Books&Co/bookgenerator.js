@@ -52,6 +52,7 @@ fetchRandomBook();
 setInterval(fetchRandomBook, 20000);
 */
 
+
 async function getRandomBookByKeyword() {
     const keywords = ["love", "mystery", "science fiction", "history", "cooking", "travel", "philosophy", "art", "music", "adventure"]; // Add more keywords!
     const randomIndex = Math.floor(Math.random() * keywords.length);
@@ -128,30 +129,36 @@ async function getRandomBookByKeyword() {
 
 //API for Search Function
 async function searchBook() {
-    const apiKey = 'AIzaSyBrXyc5lfr3wRJR70zr65Kh0tm7fPIU2oM'; 
-    const query = document.getElementById('searchBox').value.trim();
-    if (!query) {
-        alert("Please enter a book title");
-        return;
-    }
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&key=${apiKey}&_=${Date.now()}`;
-    try {
-        console.log("Fetching from URL:", url);
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log("API Response:", data);
-        books = data.items || [];
-        displayResults(books);
-        showRandomBook(); 
+  const apiKey = 'AIzaSyBrXyc5lfr3wRJR70zr65Kh0tm7fPIU2oM'; 
+  const query = document.getElementById('searchBox').value.trim();
+  if (!query) {
+      alert("Please enter a book title");
+      return;
+  }
 
-    } catch (error) {
-        console.error("Error fetching book data:", error);
-        document.getElementById('searchresults').innerHTML = `<p style="color:red;">Error fetching book data: ${error.message}</p>`;
-    }
+  // 🔄 Save search to backend
+  fetch('/api/search', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ query })
+  });
+
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&key=${apiKey}&_=${Date.now()}`;
+  try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+      const data = await response.json();
+      const books = data.items || [];
+      displayResults(books);
+      showRandomBook(); // Optional: to refresh display below
+
+  } catch (error) {
+      console.error("Error fetching book data:", error);
+      document.getElementById('searchresults').innerHTML = `<p style="color:red;">Error fetching book data: ${error.message}</p>`;
+  }
 }
+
 
 function displayResults(books) {
     console.log("displayResults called with:", books);

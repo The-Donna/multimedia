@@ -3,6 +3,8 @@
 <head>
   <title>Sign Up</title>
   <link rel="stylesheet" href="/style.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     #strengthMeter {
       height: 6px;
@@ -11,11 +13,33 @@
       margin-top: 5px;
       border-radius: 3px;
     }
-    #strengthText {
+
+    #strengthText,
+    #matchMessage {
       font-size: 0.85rem;
       color: #333;
       margin-top: 4px;
       display: block;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input {
+      width: 100%;
+      padding-right: 30px;
+    }
+
+    .eye-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 18px;
+      color: #555;
+      user-select: none;
     }
   </style>
 </head>
@@ -30,8 +54,23 @@
     <form action="/auth/signup" method="POST">
       <input name="username" placeholder="Name" required>
       <input name="email" type="email" placeholder="Email" required>
-      
-      <input id="password" name="password" type="password" placeholder="Password" required>
+
+    
+      <div class="password-wrapper">
+        <input id="password" name="password" type="password" placeholder="Password" required>
+        <span class="eye-icon" id="togglePassword"><i class="fa-regular fa-eye"></i></span>
+      </div>
+
+  
+      <div class="password-wrapper">
+        <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm Password" required>
+        <span class="eye-icon" id="toggleConfirmPassword"><i class="fa-regular fa-eye"></i></span>
+      </div>
+
+
+      <small id="matchMessage"></small>
+
+   
       <div id="strengthMeter"></div>
       <small id="strengthText"></small>
 
@@ -44,9 +83,14 @@
 
   <script>
     const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const togglePassword = document.getElementById("togglePassword");
+    const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
     const strengthMeter = document.getElementById("strengthMeter");
     const strengthText = document.getElementById("strengthText");
+    const matchMessage = document.getElementById("matchMessage");
 
+   
     password.addEventListener("input", () => {
       const val = password.value;
       let strength = 0;
@@ -62,6 +106,32 @@
 
       strengthMeter.style.background = colors[strength];
       strengthText.innerText = messages[strength];
+    });
+
+    function setupToggle(toggleElement, inputElement) {
+      toggleElement.addEventListener("click", () => {
+        const icon = toggleElement.querySelector("i");
+        const type = inputElement.type === "password" ? "text" : "password";
+        inputElement.type = type;
+        icon.classList.toggle("fa-eye");
+        icon.classList.toggle("fa-eye-slash");
+      });
+    }
+
+    setupToggle(togglePassword, password);
+    setupToggle(toggleConfirmPassword, confirmPassword);
+
+  
+    confirmPassword.addEventListener("input", () => {
+      if (confirmPassword.value !== password.value) {
+        confirmPassword.setCustomValidity("Passwords do not match");
+        matchMessage.innerText = "❌ Passwords do not match";
+        matchMessage.style.color = "red";
+      } else {
+        confirmPassword.setCustomValidity("");
+        matchMessage.innerText = "✅ Passwords match";
+        matchMessage.style.color = "green";
+      }
     });
   </script>
 </body>

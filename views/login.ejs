@@ -3,19 +3,26 @@
 <head>
   <title>Login</title>
   <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    #strengthMeter {
-      height: 6px;
-      width: 100%;
-      background: #ccc;
-      margin-top: 5px;
-      border-radius: 3px;
+    .password-wrapper {
+      position: relative;
     }
-    #strengthText {
-      font-size: 0.85rem;
-      color: #333;
-      margin-top: 4px;
-      display: block;
+
+    .password-wrapper input {
+      width: 100%;
+      padding-right: 30px; 
+    }
+
+    .eye-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 18px;
+      color: #555;
+      user-select: none;
     }
   </style>
 </head>
@@ -30,9 +37,10 @@
     <form action="/auth/login" method="POST">
       <input name="email" type="email" placeholder="Email" required>
 
-      <input id="password" name="password" type="password" placeholder="Password" required>
-      <div id="strengthMeter"></div>
-      <small id="strengthText"></small>
+      <div class="password-wrapper">
+        <input id="password" name="password" type="password" placeholder="Password" required>
+        <span class="eye-icon" id="togglePassword"><i class="fa-regular fa-eye"></i></span>
+      </div>
 
       <button type="submit">Login</button>
     </form>
@@ -43,24 +51,15 @@
 
   <script>
     const password = document.getElementById("password");
-    const strengthMeter = document.getElementById("strengthMeter");
-    const strengthText = document.getElementById("strengthText");
+    const togglePassword = document.getElementById("togglePassword");
 
-    password.addEventListener("input", () => {
-      const val = password.value;
-      let strength = 0;
+    togglePassword.addEventListener("click", () => {
+      const type = password.type === "password" ? "text" : "password";
+      password.type = type;
 
-      if (val.length >= 6) strength++;
-      if (/[A-Z]/.test(val)) strength++;
-      if (/[0-9]/.test(val)) strength++;
-      if (/[^A-Za-z0-9]/.test(val)) strength++;
-      if (val.length >= 10) strength++;
-
-      const colors = ["#ff4d4d", "#ff9933", "#ffff66", "#99cc00", "#00cc66"];
-      const messages = ["Very Weak", "Weak", "Fair", "Good", "Strong"];
-
-      strengthMeter.style.background = colors[strength];
-      strengthText.innerText = messages[strength];
+      const icon = togglePassword.querySelector("i");
+      icon.classList.toggle("fa-eye");
+      icon.classList.toggle("fa-eye-slash");
     });
   </script>
 </body>

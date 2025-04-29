@@ -1,3 +1,53 @@
-<h1>Welcome, <%= user.username %></h1>
-<p>You are logged in as <%= user.email %></p>
-<a href="/logout">Logout</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome - Books&Co</title>
+  <link rel="stylesheet" href="/Booksandco.css">
+  <style>
+    .pill {
+      display: inline-block;
+      background-color: #e2e8f0;
+      color: #333;
+      padding: 8px 16px;
+      margin: 8px;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-container">
+    <div class="nav-left">
+      <a href="/home"><img src="/Logo.png" alt="logo"></a>
+    </div>
+    <ul class="nav-right">
+      <li><a href="/profile">Profile</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+  </div>
+
+  <section class="start">
+    <h1>Welcome, <%= user.username %>!</h1>
+    <p>Explore your recent discoveries</p>
+  </section>
+
+  <section class="recent-searches">
+    <h2>📖 Your Recent Searches</h2>
+    <div id="searchList">
+      <% if (userProfile.savedSearches.length > 0) { %>
+        <% userProfile.savedSearches.forEach(query => { %>
+          <span class="pill"><%= query %></span>
+        <% }) %>
+      <% } else { %>
+        <p style="color:#666;">No searches yet. Go discover something new!</p>
+      <% } %>
+    </div>
+  </section>
+
+  <div id="footer">
+    <h2>Books & Co</h2>
+    <p>&#169; 2025 Co. All Rights Reserved.</p>
+  </div>
+</body>
+</html>
