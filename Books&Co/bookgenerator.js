@@ -119,8 +119,8 @@ async function getRandomBookByKeyword() {
     }
   }
   
-  // Call getRandomBookByKeyword every 10 seconds
-  setInterval(getRandomBookByKeyword, 10000);
+  // Call getRandomBookByKeyword every 20 seconds
+  setInterval(getRandomBookByKeyword, 20000);
   
   // Initial call
   getRandomBookByKeyword();
