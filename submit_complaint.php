@@ -1,48 +1,32 @@
 <?php
-// Database config
-$host = 'localhost';
-$db   = 'complaint_db';      // Make sure this matches your database
-$user = 'root';              // Replace with your MySQL username
-$pass = '';                  // Replace with your MySQL password if needed
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-// Connect to MySQL
-$conn = new mysqli($host, $user, $pass, $db);
-
-// Connection check
-if ($conn->connect_error) {
-    http_response_code(500);
-    echo json_encode(['status' => 'error', 'message' => 'Database connection failed.']);
-    exit();
-}
-
-// Handle POST request
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name      = trim($_POST['name'] ?? '');
-    $email     = trim($_POST['email'] ?? '');
-    $complaint = trim($_POST['complaint'] ?? '');
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = trim($_POST["name"]);
+    $email = trim($_POST["email"]);
+    $message = trim($_POST["message"]);
 
     // Basic validation
-    if (empty($name) || empty($email) || empty($complaint)) {
-        http_response_code(400);
-        echo json_encode(['status' => 'error', 'message' => 'All fields are required.']);
-        exit();
+    if (empty($name) || empty($email) || empty($message)) {
+        echo json_encode(["status" => "error", "message" => "Please fill in all fields."]);
+        exit;
     }
 
-    // Prepare and insert
-    $stmt = $conn->prepare("INSERT INTO complaints (name, email, complaint) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $name, $email, $complaint);
+    // Email configuration
+    $to = "ck3236@drexel.edu";  // Replace with your email address
+    $subject = "New Contact Form Submission";
+    $body = "Name: $name\nEmail: $email\n\nMessage:\n$message";
+    $headers = "From: no-reply@yourwebsite.com\r\nReply-To: $email";
 
-    if ($stmt->execute()) {
-        echo json_encode(['status' => 'success', 'message' => 'Complaint submitted successfully.']);
+    // Send email
+    if (mail($to, $subject, $body, $headers)) {
+        echo json_encode(["status" => "success", "message" => "Thank you! Your message has been sent."]);
     } else {
-        http_response_code(500);
-        echo json_encode(['status' => 'error', 'message' => 'Error submitting complaint.']);
+        echo json_encode(["status" => "error", "message" => "Sorry, there was an error sending your message. Please try again."]);
     }
-
-    $stmt->close();
-    $conn->close();
 } else {
-    http_response_code(405);
-    echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+    echo json_encode(["status" => "error", "message" => "Invalid request method."]);
 }
 ?>
