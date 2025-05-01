@@ -156,13 +156,15 @@
                         const overview = movie.overview ? movie.overview.slice(0, 150) + '...' : 'No overview available';
 
                         movieDiv.innerHTML = `
-                            <div class="movieCard">
-                                <img src="${posterUrl}" alt="${movie.title}" class="movie-poster">
-                                <h3>${movie.title}</h3>
-                                <p><strong>Release Year:</strong> ${releaseYear}</p>
-                                <p><strong>Cast:</strong> ${cast}</p>
-                                <p><strong>Overview:</strong> ${overview}</p>
-                            </div>
+                            <a href="movie.html?id=${movie.id}" style="text-decoration:none;">    
+                                <div class="movieCard">
+                                    <img src="${posterUrl}" alt="${movie.title}" class="movie-poster">
+                                    <h3>${movie.title}</h3>
+                                    <p><strong>Release Year:</strong> ${releaseYear}</p>
+                                    <p><strong>Cast:</strong> ${cast}</p>
+                                    <p><strong>Overview:</strong> ${overview}</p>
+                                </div>
+                            </a>
                         `;
 
                         movieList.appendChild(movieDiv);
