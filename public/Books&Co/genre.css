@@ -6,7 +6,7 @@
     padding: 30px;
 }
 
-#results, #moviesresults {
+#bookresults, #moviesresults {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Keeps the grid layout */
     gap: 20px;
@@ -41,7 +41,7 @@
 }
 
 /* Book card styling */
-#results div {
+#bookresults div {
     background-color: #F5ECD5 ;
     border-radius: 12px;
     padding: 15px;
@@ -51,7 +51,7 @@
 }
 
 /* Image */
-#results img {
+#bookresults img {
     width: 100%;
     height: auto;
     object-fit: cover;
@@ -60,20 +60,20 @@
 }
 
 /* Title */
-#results h3 {
+#bookresults h3 {
     font-size: 16px;
     margin: 10px 0 5px;
     color: #333;
 }
 
 /* Author(s) */
-#results p {
+#bookresults p {
     font-size: 14px;
     color: #666;
     margin: 0;
 }
 
-#results div p {
+#bookresults div p {
     font-size: 15px;
     color: #555;
 }

@@ -14,92 +14,152 @@
 </head>
 
 <body>
-  <div class="nav-container">
-    <div class="nav-left">
-        <img src="Logo.png" alt="logo">
-    </div>
-    <ul class="nav-right">
-      <li><a href="Index.html">Home</a></li>
-        <li id="search" class="search-container">
-            <button id="searchToggle" aria-label="Search">
-                <i class="fas fa-search"></i>
-            </button>
-            <input type="text" id="searchBox" placeholder="Search..." name="q">
-        </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle">Genre ▼</a>
-            <ul class="dropdown-menu">
-                <li><a href="Fiction.html">Fiction</a></li>
-                <li><a href="Horror.html">Horror</a></li>
-                <li><a href="Romance.html">Romance</a></li>
-                <li><a href="Thriller.html">Action/Thriller</a></li>
-                <li><a href="Comedy.html">Comedy</a></li>
+    <div id="homepage"></div>
+        <div class="nav-container">
+            <div class="nav-left">
+                <img src="Logo.png" alt="logo">
+            </div>
+            <ul class="nav-right">
+            <li><a href="Index.html">Home</a></li>
+                <li id="search" class="search-container">
+                    <button id="searchToggle" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <input type="text" id="searchBox" placeholder="Search..." name="q">
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Genre ▼</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="Fiction.html">Fiction</a></li>
+                        <li><a href="Horror.html">Horror</a></li>
+                        <li><a href="Romance.html">Romance</a></li>
+                        <li><a href="Thriller.html">Action/Thriller</a></li>
+                        <li><a href="Comedy.html">Comedy</a></li>
+                    </ul>
+                </li>
+                <li><a href="About.html">About</a></li>
+                <li><a href="Contact.html">Contact</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
             </ul>
-        </li>
-        <li><a href="About.html">About</a></li>
-        <li><a href="Contact.html">Contact</a></li>
-        <li><a href="FAQ.html">FAQ</a></li>
-    </ul>
-  </div>
-    <br>
+        </div>
+        <br>
 
 
-    <div class="display">
-        <div class="content">
+        <div class="display">
+            <div class="content">
 
-            <img src="gloriaatolagbe.jpg">
-            <h3>Gloria Atolagbe</h3>
-            <p>Gloria is a third-year Drexel student majoring in Computing Security and Technology.
-            </p>
+                <img src="gloriaatolagbe.jpg">
+                <h3>Gloria Atolagbe</h3>
+                <p>Gloria is a third-year Drexel student majoring in Computing Security and Technology.
+                </p>
+            </div>
+
+            <div class="content">
+
+                <img src="alyntetteh.jpg">
+                <h3>Alyn Tetteh</h3>
+                <p>Alyn is a first-year Drexel student majoring in Software Engineering.
+                </p>
+            </div>
+
+            <div class="content">
+
+                <img src="zemzemsaif.jpg">
+                <h3>Zemzem Saif</h3>
+                <p>Zemzem is a first-year Drexel student in the First-Year Exploratory Studies Program.
+                </p>
+            </div>
+
+            <div class="content">
+
+                <img src="conniekelley.jpg">
+                <h3>Connie Kelley</h3>
+                <p>Connie is a first-year Drexel student majoring in Computing Security and Technology.
+                </p>
+            </div>
+
+            <div class="content2">
+
+                <h3>Why Books & Co?</h3>
+                <p>Our team came together after discovering our mutual love for books and movies. From this, we built a little community amongst ourselves and realized that we wanted to share our passion with others, and Books & Co was born! We developed Books & Co to allow other book or movie lovers to find an array of selections from different genres they enjoy or want to explore. We also wanted to help people who don't usually read or watch films jump into it with fun tools we added! Our team hopes that you enjoy our website as much as we did making it!
+                </p>
+            </div>
+
         </div>
 
-        <div class="content">
+        <div id="footer">
 
-            <img src="alyntetteh.jpg">
-            <h3>Alyn Tetteh</h3>
-            <p>Alyn is a first-year Drexel student majoring in Software Engineering.
-            </p>
+            <h2>Books &amp; Co</h2>
+    
+            <p>&#169; 2025 Co. All Rights Reserved.</p>
+    
         </div>
+    </div>
 
-        <div class="content">
-
-            <img src="zemzemsaif.jpg">
-            <h3>Zemzem Saif</h3>
-            <p>Zemzem is a first-year Drexel student in the First-Year Exploratory Studies Program.
-            </p>
-        </div>
-
-        <div class="content">
-
-            <img src="conniekelley.jpg">
-            <h3>Connie Kelley</h3>
-            <p>Connie is a first-year Drexel student majoring in Computing Security and Technology.
-            </p>
-        </div>
-
-        <div class="content2">
-
-            <h3>Why Books & Co?</h3>
-            <p>Our team came together after discovering our mutual love for books and movies. From this, we built a little community amongst ourselves and realized that we wanted to share our passion with others, and Books & Co was born! We developed Books & Co to allow other book or movie lovers to find an array of selections from different genres they enjoy or want to explore. We also wanted to help people who don't usually read or watch films jump into it with fun tools we added! Our team hopes that you enjoy our website as much as we did making it!
-            </p>
-        </div>
-
+    <div id="resultspage" class="page">
+        <button id="backButton">← Back</button>
+        <h2 style="font-size: 30px; color: #578E7E; text-align: center;">Search Results</h2>
+        <div id="results" class="resultscontainer"></div>
     </div>
 
     <script>
-      document.querySelector('.dropdown-toggle').addEventListener('click', (e) => {
+        const searchToggle = document.getElementById('searchToggle');
+        const searchBox = document.getElementById('searchBox');
+        const homepage = document.getElementById('homepage');
+        const resultspage = document.getElementById('resultspage');
+        const resultscontainer = document.getElementById('results');
+        const backButton = document.getElementById('backButton');
+
+        searchToggle.addEventListener('click', () => {
+          searchBox.classList.toggle('expanded');
+          if (searchBox.classList.contains('expanded')) {
+            searchBox.focus();
+          }
+        });
+
+        // Trigger search on Enter key
+        searchBox.addEventListener('keydown', async (e) => {
+          if (e.key === 'Enter') {
             e.preventDefault();
-            document.querySelector('.dropdown-menu').classList.toggle('show');
+            const query = searchBox.value.trim();
+            if (!query) return;
+
+            homepage.classList.add('slide-left');
+            resultspage.classList.add('active');
+
+            const results = await searchMedia(query);
+            displayResults(results);
+          }
+        });
+
+        // Back button logic
+        backButton.addEventListener('click', () => {
+          homepage.classList.remove('slide-left');
+          resultspage.classList.remove('active');
+          searchBox.value = '';
+          resultscontainer.innerHTML = '';
+        });
+
+        document.querySelector('.dropdown-toggle').addEventListener('click', (e) => {
+              e.preventDefault();
+              document.querySelector('.dropdown-menu').classList.toggle('show');
+          });
+    </script>
+    <script src="searchresults.js"></script>
+
+
+    <script>
+      fetch('/api/profile')
+        .then(res => res.json())
+        .then(data => {
+          if (data.username) {
+            document.getElementById('user-greeting').innerText = `Welcome, ${data.username}!`;
+          }
+        })
+        .catch(err => {
+          console.error('Failed to load username:', err);
         });
     </script>
 
-
-    <div id="footer">
-
-        <h2>Books &amp; Co</h2>
-
-        <p>&#169; 2025 Co. All Rights Reserved.
-
-    </div>
-
 </body>
+</html>

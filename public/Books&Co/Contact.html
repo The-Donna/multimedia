@@ -3,79 +3,146 @@
 <html lang="en">
 
 <head>
-        <meta charset="utf-8">
-        
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" type="text/css" href="Booksandco.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-        
-        <title>Books&Co</title>
+  <link rel="stylesheet" type="text/css" href="Booksandco.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <title>Books&Co</title>
 </head>
 
 <body>
-  <div class="nav-container">
-    <div class="nav-left">
-      <a href="Index.html"><img src="Logo.png" alt="logo"></a>
-    </div>
-    <ul class="nav-right">
-      <li><a href="Index.html">Home</a></li>
-        <li id="search" class="search-container">
-            <button id="searchToggle" aria-label="Search">
-                <i class="fas fa-search"></i>
-            </button>
-            <input type="text" id="searchBox" placeholder="Search..." name="q">
-        </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle">Genre ▼</a>
-            <ul class="dropdown-menu">
-                <li><a href="Fiction.html">Fiction</a></li>
-                <li><a href="Horror.html">Horror</a></li>
-                <li><a href="Romance.html">Romance</a></li>
-                <li><a href="Thriller.html">Action/Thriller</a></li>
-                <li><a href="Comedy.html">Comedy</a></li>
-            </ul>
-        </li>
-        <li><a href="About.html">About</a></li>
-        <li><a href="Contact.html">Contact</a></li>
-        <li><a href="FAQ.html">FAQ</a></li>
-    </ul>
-  </div>
-      
- <h1>Welcome to the Books&Co Contact Page</h1>
-
-        <h3>If you have any issues or just want to get in contact with the company, please fill out the form below.</h3>
-        
-       
-        <form action="submit_form.php" method="POST">
-            <label for="name">Full Name:</label><br>
-            <input type="text" id="name" name="name" required><br><br>
-
-            <label for="email">Email Address:</label><br>
-            <input type="email" id="email" name="email" required><br><br>
-
-            <label for="message">Message:</label><br>
-            <textarea id="message" name="message" rows="5" cols="40" required></textarea><br><br>
-
-            <input type="submit" value="Submit">
-        </form>
-
-        <h4>Alternatively, you can access the full Contact Form here: </h4>
-        <a href="https://forms.gle/Cbv35nycDQ8845g16" target="_blank">Click here to access the Contact Form</a>
-
-        <script>
-          document.querySelector('.dropdown-toggle').addEventListener('click', (e) => {
-                e.preventDefault();
-                document.querySelector('.dropdown-menu').classList.toggle('show');
-            });
-        </script>
-
-        <div id="footer">
-
-            <h2>Books &amp; Co</h2>
-
-            <p>&#169; 2025 Co. All Rights Reserved.
-
+    <div id="homepage">
+      <div class="nav-container">
+        <div class="nav-left">
+          <a href="Index.html"><img src="Logo.png" alt="logo"></a>
         </div>
+        <ul class="nav-right">
+          <li><a href="Index.html">Home</a></li>
+            <li id="search" class="search-container">
+                <button id="searchToggle" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+                <input type="text" id="searchBox" placeholder="Search..." name="q">
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Genre ▼</a>
+                <ul class="dropdown-menu">
+                    <li><a href="Fiction.html">Fiction</a></li>
+                    <li><a href="Horror.html">Horror</a></li>
+                    <li><a href="Romance.html">Romance</a></li>
+                    <li><a href="Thriller.html">Action/Thriller</a></li>
+                    <li><a href="Comedy.html">Comedy</a></li>
+                </ul>
+            </li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Contact.html">Contact</a></li>
+            <li><a href="FAQ.html">FAQ</a></li>
+        </ul>
+      </div>
+          
+      <h1>Welcome to the Books&Co Contact Page</h1>
+
+      <h3>If you have any issues or just want to get in contact with the company, please fill out the form below.</h3>
+            
+      <form action="submit_form.php" method="POST">
+          <label for="name">Full Name:</label><br>
+          <input type="text" id="name" name="name" required><br><br>
+
+          <label for="email">Email Address:</label><br>
+          <input type="email" id="email" name="email" required><br><br>
+
+          <label for="message">Message:</label><br>
+          <textarea id="message" name="message" rows="5" cols="40" required></textarea><br><br>
+
+          <input type="submit" value="Submit">
+      </form>
+
+      <h4>Alternatively, you can access the full Contact Form here: </h4>
+      <a href="https://forms.gle/Cbv35nycDQ8845g16" target="_blank">Click here to access the Contact Form</a>
+
+      <script>
+        document.querySelector('.dropdown-toggle').addEventListener('click', (e) => {
+              e.preventDefault();
+              document.querySelector('.dropdown-menu').classList.toggle('show');
+          });
+      </script>
+
+      <div id="footer">
+
+          <h2>Books &amp; Co</h2>
+
+          <p>&#169; 2025 Co. All Rights Reserved.</p>
+
+      </div>
+    </div>
+    
+    <div id="resultspage" class="page">
+      <button id="backButton">← Back</button>
+      <h2 style="font-size: 30px; color: #578E7E; text-align: center;">Search Results</h2>
+      <div id="results" class="resultscontainer"></div>
+    </div>
+    
+    <script>
+        const searchToggle = document.getElementById('searchToggle');
+        const searchBox = document.getElementById('searchBox');
+        const homepage = document.getElementById('homepage');
+        const resultspage = document.getElementById('resultspage');
+        const resultscontainer = document.getElementById('results');
+        const backButton = document.getElementById('backButton');
+
+        searchToggle.addEventListener('click', () => {
+          searchBox.classList.toggle('expanded');
+          if (searchBox.classList.contains('expanded')) {
+            searchBox.focus();
+          }
+        });
+
+        // Trigger search on Enter key
+        searchBox.addEventListener('keydown', async (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            const query = searchBox.value.trim();
+            if (!query) return;
+
+            homepage.classList.add('slide-left');
+            resultspage.classList.add('active');
+
+            const results = await searchMedia(query);
+            displayResults(results);
+          }
+        });
+
+        // Back button logic
+        backButton.addEventListener('click', () => {
+          homepage.classList.remove('slide-left');
+          resultspage.classList.remove('active');
+          searchBox.value = '';
+          resultscontainer.innerHTML = '';
+        });
+
+        document.querySelector('.dropdown-toggle').addEventListener('click', (e) => {
+              e.preventDefault();
+              document.querySelector('.dropdown-menu').classList.toggle('show');
+          });
+    </script>
+    <script src="searchresults.js"></script>
+
+
+    <script>
+      fetch('/api/profile')
+        .then(res => res.json())
+        .then(data => {
+          if (data.username) {
+            document.getElementById('user-greeting').innerText = `Welcome, ${data.username}!`;
+          }
+        })
+        .catch(err => {
+          console.error('Failed to load username:', err);
+        });
+    </script>  
 
 </body>
+</html>

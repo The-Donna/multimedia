@@ -11,6 +11,7 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); 
 app.use(express.static('public')); 
 
 app.use(session({
@@ -38,6 +39,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, passwor
 
 
 app.use('/auth', require('./routes/auth'));
+app.use('/api/comments', require('./routes/comments'));
 
 console.log("😀");
 
