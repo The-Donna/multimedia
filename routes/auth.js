@@ -4,8 +4,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const User = require('../models/User');
 
-
-router.post('/signup', async (req, res) => {
+router.post('/signup', async (req, res, next) => {
   const { username, email, password } = req.body;
   const existing = await User.findOne({ email });
   if (existing) return res.send('User already exists');
@@ -13,13 +12,16 @@ router.post('/signup', async (req, res) => {
   const hashed = await bcrypt.hash(password, 10);
   const user = new User({ username, email, password: hashed });
   await user.save();
-  res.redirect('/login');
+
+  req.login(user, (err) => {
+    if (err) return next(err);
+    return res.redirect('/Books&Co/Index.html');
+  });
 });
 
-console.log("😀`")
+
 
 router.post('/login', (req, res, next) => {
-  console.log('✅ /auth/login route hit');
 
   const { email, password } = req.body;
   if (!email || !password) {

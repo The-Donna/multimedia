@@ -41,8 +41,6 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, passwor
 app.use('/auth', require('./routes/auth'));
 app.use('/api/comments', require('./routes/comments'));
 
-console.log("😀");
-
 app.get('/', (req, res) => {
   if (req.isAuthenticated()) {
     return res.redirect('/Books&Co/Index.html'); 
@@ -55,8 +53,6 @@ app.get('/login', (req, res) => res.render('login'));
 
 
 app.post('/login', (req, res, next) => {
-  console.log("😇")
-  console.log('✅ /auth/login route hit');
 
   const { email, password } = req.body;
   if (!email || !password) {
