@@ -43,6 +43,7 @@ body {
   font-weight: bold;
 }
 
+/* === SEARCH BAR === */
 .search-container {
   display: flex;
   align-items: center;
@@ -330,4 +331,12 @@ img {
   font-size: 0.85rem;
   color: #444;
   margin-top: 0.5rem;
+}
+
+.dropdown {
+  transition: transform 0.2s ease;
+}
+
+.dropdown:hover {
+  transform: translateY(-3px);
 }
