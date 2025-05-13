@@ -92,11 +92,7 @@
                         `;
 
                         bookElement.addEventListener('click', () => {
-                            if (infoLink) {
-                                window.open(infoLink, '_blank');
-                            } else {
-                                alert("No info link available for this book.");
-                            }
+                            window.location.href = `book.html?id=${book.id}`;
                         });
 
                         resultsDiv.appendChild(bookElement);

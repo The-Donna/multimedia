@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="Booksandco.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
+
+    <title>Movie</title>
+    <style>
+       .comment-box { 
+            margin-top: 15px; 
+        }
+        
+        .comment {
+            margin-bottom: 10px; 
+            border-bottom: 1px solid #ccc; 
+            padding: 10px; 
+            color: #F5ECD5;
+            font-size: 17px;
+        }
+        
+        #comments { 
+            width: 75%;
+            margin: auto;
+            padding: 10px; 
+            background-color: #578E7E;
+            border-radius: 20px;
+        } 
+
+        input, textarea {
+            width: 60%;
+        }
+
+        #movie-container {
+            width: 75%;
+            margin: auto;
+            padding: 10px;
+        }
+
+        h3 {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: 25px;
+            color: #F5ECD5;
+        }
+    </style>
+</head>
+<body>
+    <div id="homepage">
+        <div class="nav-container">
+            <div class="nav-left">
+            <a href="Index.html"><img src="Logo.png" alt="logo"></a>
+            </div>
+            <ul class="nav-right">
+            <li><a href="Index.html">Home</a></li>
+                <li id="search" class="search-container">
+                    <button id="searchToggle" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <input type="text" id="searchBox" placeholder="Search..." name="q">
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Genre ▼</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="Fiction.html">Fiction</a></li>
+                        <li><a href="Horror.html">Horror</a></li>
+                        <li><a href="Romance.html">Romance</a></li>
+                        <li><a href="Thriller.html">Action/Thriller</a></li>
+                        <li><a href="Comedy.html">Comedy</a></li>
+                    </ul>
+                </li>
+                <li><a href="About.html">About</a></li>
+                <li><a href="Contact.html">Contact</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
+            </ul>
+        </div>
+
+        <div id="samplePages" style="width: 100%; height: 600px;"></div>
+        
+        <div id="comments">
+            <h3>Comments</h3>
+            <form id="comment-box">
+                <input type="text" id="username" placeholder="Your name"><br>
+                <textarea id="comment" rows="3" placeholder="Write a comment..."></textarea><br>
+                <button type="button" onclick="submitComment()">Post Comment</button>
+            </form><br>
+
+            <div id="comments-list"></div>
+        </div>
+
+        <br>
+        <br>
+
+        <div id="footer">
+
+            <h2>Books &amp; Co</h2>
+
+            <p>&#169; 2025 Co. All Rights Reserved.</p>
+
+        </div>
+    </div>
+
+    <div id="resultspage" class="page">
+        <button id="backButton">← Back</button>
+        <h2 style="font-size: 30px; color: #578E7E; text-align: center;">Search Results</h2>
+        <div id="results" class="resultscontainer"></div>
+    </div>
+
+    <script>
+        const searchToggle = document.getElementById('searchToggle');
+        const searchBox = document.getElementById('searchBox');
+        const homepage = document.getElementById('homepage');
+        const resultspage = document.getElementById('resultspage');
+        const resultscontainer = document.getElementById('results');
+        const backButton = document.getElementById('backButton');
+
+        searchToggle.addEventListener('click', () => {
+          searchBox.classList.toggle('expanded');
+          if (searchBox.classList.contains('expanded')) {
+            searchBox.focus();
+          }
+        });
+
+        // Trigger search on Enter key
+        searchBox.addEventListener('keydown', async (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            const query = searchBox.value.trim();
+            if (!query) return;
+
+            homepage.classList.add('slide-left');
+            resultspage.classList.add('active');
+
+            const results = await searchMedia(query);
+            displayResults(results);
+          }
+        });
+
+        // Back button logic
+        backButton.addEventListener('click', () => {
+          homepage.classList.remove('slide-left');
+          resultspage.classList.remove('active');
+          searchBox.value = '';
+          resultscontainer.innerHTML = '';
+        });
+
+        document.querySelector('.dropdown-toggle').addEventListener('click', (e) => {
+              e.preventDefault();
+              document.querySelector('.dropdown-menu').classList.toggle('show');
+          });
+
+    </script>
+
+    <script>
+        fetch('/api/profile')
+        .then(res => res.json())
+        .then(data => {
+            if (data.username) {
+            document.getElementById('user-greeting').innerText = `Welcome, ${data.username}!`;
+            }
+        })
+        .catch(err => {
+            console.error('Failed to load username:', err);
+        });
+    </script>
+
+    <script src="searchresults.js"></script>
+    <script src="book.js"></script>
+  
+</body>
+</html>
