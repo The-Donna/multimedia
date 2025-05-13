@@ -43,6 +43,9 @@
           </ul>
         </div>
 
+
+        <div id="historyContainer"></div>
+        
           <section class="start">
               <h1>Discover Amazing Books & Movies</h1>
               <p>Explore the best stories from around the world</p>    
@@ -63,7 +66,7 @@
               </div>
             </div>
           </section>
-
+          
           <div id="footer">
 
             <h2>Books &amp; Co</h2>
@@ -140,21 +143,6 @@
       <script src="moviegenerator.js"></script>
       <script src="searchresults.js"></script>
 
-
-<<<<<<< Updated upstream
-      <script>
-        fetch('/api/profile')
-          .then(res => res.json())
-          .then(data => {
-            if (data.username) {
-              document.getElementById('user-greeting').innerText = `Welcome, ${data.username}!`;
-            }
-          })
-          .catch(err => {
-            console.error('Failed to load username:', err);
-          });
-      </script>
-=======
         <script>
  fetch('/api/profile')
   .then(res => res.json())
@@ -182,8 +170,30 @@
   });
 
         </script>
-        
->>>>>>> Stashed changes
+
+<script>
+  document.addEventListener("click", async function (e) {
+    if (e.target.classList.contains("favorite-btn")) {
+      const card = e.target.closest(".card");
+      const itemId = card.getAttribute("data-id");
+      const itemType = card.getAttribute("data-type"); // "book" or "movie"
+
+      const response = await fetch("/api/favorite", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ itemId, itemType })
+      });
+
+      if (response.ok) {
+        alert("Added to favorites!");
+      }
+    }
+  });
+</script>
+
+
              
 </body>
 </html>
