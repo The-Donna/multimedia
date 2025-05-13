@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books&Co</title>
+    <link rel="stylesheet" type="text/css" href="Booksandco.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div id="homepage" class="light-mode">
+        <div class="nav-container light-mode">
+            <div class="nav-left">
+                <a href="Index.html"><img src="Logo.png" alt="logo"></a>
+            </div>
+            <ul class="nav-right">
+                <li id="login-link"><a href="http://localhost:3000" class="light-mode">Sign up/Login</a></li>
+                <li id="search" class="search-container">
+                    <button id="searchToggle" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <input type="text" id="searchBox" placeholder="Search..." name="q">
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle light-mode">Genre ▼</a>
+                    <ul class="dropdown-menu light-mode">
+                        <li><a href="Fiction.html" class="light-mode">Fiction</a></li>
+                        <li><a href="Horror.html" class="light-mode">Horror</a></li>
+                        <li><a href="Romance.html" class="light-mode">Romance</a></li>
+                        <li><a href="Thriller.html" class="light-mode">Action/Thriller</a></li>
+                        <li><a href="Comedy.html" class="light-mode">Comedy</a></li>
+                    </ul>
+                </li>
+                <li><a href="About.html" class="light-mode">About</a></li>
+                <li><a href="Contact.html" class="light-mode">Contact</a></li>
+                <li><a href="FAQ.html" class="light-mode">FAQ</a></li>
+            </ul>
+        </div>
+        <section class="start light-mode">
+            <h1>Discover Amazing Books & Movies</h1>
+            <p>Explore the best stories from around the world</p>
+        </section>
+        <section class="random">
+            <div id="booksGenerator">
+                <h1>📖 Books</h1>
+                <div id="book-card" class="card light-mode">
+                    <p>Loading book...</p>
+                </div>
+            </div>
+            <div id="movieGenerator">
+                <h1>🎬 Movies</h1>
+                <div id="movie-Card" class="movie-card light-mode">
+                    <p>Loading movie...</p>
+                </div>
+            </div>
+        </section>
+        <div id="footer" class="light-mode">
+            <h2>Books &amp; Co</h2>
+            <p>© 2025 Co. All Rights Reserved.</p>
+        </div>
+    </div>
+
+    <div id="resultspage" class="page light-mode">
+        <button id="backButton">← Back</button>
+        <h2 style="font-size: 30px; color: #578E7E; text-align: center;">Search Results</h2>
+        <div id="results" class="resultscontainer"></div>
+    </div>
+
+    <button id="darkModeToggle" class="light">
+        <i class="fas fa-moon"></i> </button>
+
+    <script>
+        const searchToggle = document.getElementById('searchToggle');
+        const searchBox = document.getElementById('searchBox');
+        const homepage = document.getElementById('homepage');
+        const resultspage = document.getElementById('resultspage');
+        const resultscontainer = document.getElementById('results');
+        const backButton = document.getElementById('backButton');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const navContainer = document.querySelector('.nav-container');
+        const navRightLinks = document.querySelectorAll('.nav-right a');
+        const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+        const footer = document.getElementById('footer');
+        const cards = document.querySelectorAll('.card, .movie-card');
+        const startSection = document.querySelector('.start');
+        const contents = document.querySelectorAll('.content');
+        const contents2 = document.querySelectorAll('.content2');
+        const resultCards = document.querySelectorAll('.result-card');
+
+        searchToggle.addEventListener('click', () => {
+            searchBox.classList.toggle('expanded');
+            if (searchBox.classList.contains('expanded')) {
+                searchBox.focus();
+            }
+        });
+
+        searchBox.addEventListener('keydown', async (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = searchBox.value.trim();
+                if (!query) return;
+
+                homepage.classList.add('slide-left');
+                resultspage.classList.add('active');
+
+                const results = await searchMedia(query);
+                displayResults(results);
+            }
+        });
+
+        backButton.addEventListener('click', () => {
+            homepage.classList.remove('slide-left');
+            resultspage.classList.remove('active');
+            searchBox.value = '';
+            resultscontainer.innerHTML = '';
+        });
+
+        document.addEventListener('click', function (e) {
+            const toggle = e.target.closest('.dropdown-toggle');
+            if (toggle) {
+                e.preventDefault();
+                document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.remove('show'));
+                const parent = toggle.closest('.dropdown');
+                const menu = parent && parent.querySelector('.dropdown-menu');
+                if (menu) menu.classList.toggle('show');
+            } else {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.remove('show'));
+            }
+        });
+
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
+            navContainer.classList.toggle('dark-mode');
+            navContainer.classList.toggle('light-mode');
+            navRightLinks.forEach(link => {
+                link.classList.toggle('dark-mode');
+                link.classList.toggle('light-mode');
+            });
+            dropdownMenus.forEach(menu => {
+                menu.classList.toggle('dark-mode');
+                menu.classList.toggle('light-mode');
+            });
+            footer.classList.toggle('dark-mode');
+            footer.classList.toggle('light-mode');
+            cards.forEach(card => {
+                card.classList.toggle('dark-mode');
+                card.classList.toggle('light-mode');
+            });
+            startSection.classList.toggle('dark-mode');
+            startSection.classList.toggle('light-mode');
+             contents.forEach(content => {
+                content.classList.toggle('dark-mode');
+                content.classList.toggle('light-mode');
+            });
+            contents2.forEach(content2 => {
+                content2.classList.toggle('dark-mode');
+                content2.classList.toggle('light-mode');
+            });
+            resultCards.forEach(resultCard => {
+                resultCard.classList.toggle('dark-mode');
+                resultCard.classList.toggle('light-mode');
+            });
+
+            // Toggle button appearance
+            if (darkModeToggle.classList.contains('light')) {
+                darkModeToggle.classList.remove('light');
+                darkModeToggle.classList.add('dark');
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; // Sun icon for light mode
+            } else {
+                darkModeToggle.classList.remove('dark');
+                darkModeToggle.classList.add('light');
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; // Moon icon for dark mode
+            }
+        });
+
+        // Initial theme setup (optional -  checks for user preference)
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.add('dark-mode');
+            document.body.classList.remove('light-mode');
+            navContainer.classList.add('dark-mode');
+            navContainer.classList.remove('light-mode');
+            navRightLinks.forEach(link => {
+                link.classList.add('dark-mode');
+                link.classList.remove('light-mode');
+            });
+            dropdownMenus.forEach(menu => {
+                menu.classList.add('dark-mode');
+                menu.classList.remove('light-mode');
+            });
+            footer.classList.add('dark-mode');
+            footer.classList.remove('light-mode');
+            cards.forEach(card => {
+                card.classList.add('dark-mode');
+                card.classList.remove('light-mode');
+            });
+            startSection.classList.add('dark-mode');
+            startSection.classList.remove('light-mode');
+            contents.forEach(content => {
+                content.classList.add('dark-mode');
+                content.classList.remove('light-mode');
+            });
+            contents2.forEach(content2 => {
+                content2.classList.add('dark-mode');
+                content2.classList.remove('light-mode');
+            });
+            resultCards.forEach(resultCard => {
+                resultCard.classList.add('dark-mode');
+                resultCard.classList.remove('light-mode');
+            });
+            darkModeToggle.classList.remove('light');
+            darkModeToggle.classList.add('dark');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; // Set sun icon
+        } else {
+             darkModeToggle.classList.add('light');
+             darkModeToggle.classList.remove('dark');
+             darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+    </script>
+      <script>
+        fetch('/api/profile')
+          .then(res => res.json())
+          .then(data => {
+            if (data.username) {
+              const loginLink = document.getElementById('login-link');
+              if (loginLink) {
+                loginLink.innerHTML = `
+                  <div class="dropdown">
+                    <a href="#" class="dropdown-toggle light-mode" style="color: #F5ECD5; font-weight: bold;">
+                      Welcome, ${data.username} ▼
+                    </a>
+                    <ul class="dropdown-menu light-mode">
+                      <li><a href="/history" class="light-mode">History</a></li>
+                      <li><a href="/favourites" class="light-mode">Favourites</a></li>
+                      <li><a href="/logout" class="light-mode">Logout</a></li>
+                    </ul>
+                  </div>
+                `;
+              }
+            }
+          })
+          .catch(err => {
+            console.error('Failed to load username:', err);
+          });
+      </script>
+    <script src="bookgenerator.js"></script>
+    <script src="moviegenerator.js"></script>
+    <script src="searchresults.js"></script>
+</body>
+</html>
