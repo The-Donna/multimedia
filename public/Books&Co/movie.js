@@ -14,6 +14,13 @@ async function loadMovieDetails() {
     const res = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`);
     const movie = await res.json();
 
+   
+    addToHistory({
+      title: movie.title,
+      type: "movie",
+      id: movie.id
+    });
+
     const videoRes = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}`);
     const videoData = await videoRes.json();
     const trailer = videoData.results.find(v => v.type === 'Trailer' && v.site === 'YouTube');
@@ -44,7 +51,7 @@ async function loadComments() {
     const comments = await res.json();
 
     const commentsDiv = document.getElementById('comments-list');
-    commentsDiv.innerHTML = ''; // Clear previous comments
+    commentsDiv.innerHTML = '';
 
     comments.forEach(c => {
       const el = document.createElement('div');
@@ -80,7 +87,7 @@ async function submitComment() {
     if (res.ok) {
       document.getElementById('username').value = '';
       document.getElementById('comment').value = '';
-      loadComments(); // Refresh comments
+      loadComments();
     } else {
       const error = await res.json();
       alert('Failed to post comment: ' + (error.message || 'Unknown error'));
@@ -89,4 +96,33 @@ async function submitComment() {
     console.error('Error posting comment:', err);
     alert('Failed to post comment due to network error.');
   }
+}
+
+
+fetch('/api/history')
+  .then(res => res.json())
+  .then(history => {
+    const container = document.getElementById('historyContainer');
+    history.forEach(item => {
+      const el = document.createElement('div');
+      el.innerText = `${item.title} (${item.type})`;
+      container.appendChild(el);
+    });
+  });
+
+
+function addToHistory(item) {
+  fetch('/api/history', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      title: item.title,
+      type: item.type,
+      itemId: item.id
+    })
+  }).catch(err => {
+    console.error("Failed to save history:", err);
+  });
 }

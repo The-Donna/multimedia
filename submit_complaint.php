@@ -8,19 +8,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST["email"]);
     $message = trim($_POST["message"]);
 
-    // Basic validation
     if (empty($name) || empty($email) || empty($message)) {
         echo json_encode(["status" => "error", "message" => "Please fill in all fields."]);
         exit;
     }
 
-    // Email configuration
-    $to = "ck3236@drexel.edu";  // Replace with your email address
+    $to = "ck3236@drexel.edu";  
     $subject = "New Contact Form Submission";
     $body = "Name: $name\nEmail: $email\n\nMessage:\n$message";
     $headers = "From: no-reply@yourwebsite.com\r\nReply-To: $email";
 
-    // Send email
     if (mail($to, $subject, $body, $headers)) {
         echo json_encode(["status" => "success", "message" => "Thank you! Your message has been sent."]);
     } else {
