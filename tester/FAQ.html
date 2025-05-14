@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="Booksandco.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>FAQ</title>
+    <script src="script.js" defer></script>
+
+    <style>
+        .answer {
+            display: none;
+        }
+
+        .question {
+            font-family: Georgia, sans-serif, serif;
+            padding: 1%;
+            min-height: 35px;
+            width: 100%;
+            background-color: #FFFAEC;
+            border-radius: 25px;
+            overflow: hidden;
+        
+        }
+        .answer {
+            font-family: Georgia, sans-serif, serif;
+            padding: 1%;
+            min-height: 30px;
+            width: 100%;
+            background-color: #FFFAEC;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+
+        #footer {
+            text-decoration: none;
+            color: #F5ECD5; 
+            font-size: 11px;
+            font-family: Georgia, sans-serif, serif;
+            background-color: #578E7E;
+            text-align: center;
+            padding: 5px;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+
+    <script>
+        function drop(answerID) {
+            var ans = document.getElementById('answer' + answerID);
+            if (ans.style.display == "none" ) {
+                ans.style.display = "block";
+            } else {
+                ans.style.display = "none";
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <div id="homepage">
+        <div class="nav-container">
+            <div class="nav-left">
+            <a href="Index.html"><img src="Logo.png" alt="logo"></a>
+            </div>
+            <ul class="nav-right">
+                <li><a href="Index.html">Home</a></li>
+                <li id="search" class="search-container">
+                    <button id="searchToggle" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <input type="text" id="searchBox" placeholder="Search..." name="q">
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Genre ▼</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="Fiction.html">Fiction</a></li>
+                        <li><a href="Horror.html">Horror</a></li>
+                        <li><a href="Romance.html">Romance</a></li>
+                        <li><a href="Thriller.html">Action/Thriller</a></li>
+                        <li><a href="Comedy.html">Comedy</a></li>
+                    </ul>
+                </li>
+                <li><a href="About.html">About</a></li>
+                <li><a href="Contact.html">Contact</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
+            </ul>
+        </div>
+
+        <h1 class="one" > Frequently Asked Questions </h1>
+
+        <p class="question" onclick="drop(1)"> <strong>Where can I find some books to read or movies to watch?</strong> </p>
+        <p class="answer" id="answer1" > You can hover on the "Genre" button in the top left of the page, where you will see a menu that leads to a variety of books and movies to enjoy! </p>
+
+        <p class="question" onclick="drop(2)"> <strong>Can I search for a book I've seen before?</strong> </p>
+        <p class="answer" id="answer2" > Yes! On the "Home" page, we have a search bar where you can type in the name of a book you know or keywords to find others similar. </p>
+
+        <p class="question" onclick="drop(3)"> <strong>What if I don't know what to read or watch?</strong> </p>
+        <p class="answer" id="answer3" > We have made a generator for both books and movies for those who aren't sure what to watch or read or are simply feeling adventurous for something new! </p>
+
+        <p class="question" onclick="drop(4)"> <strong>How can I see who made the website?</strong> </p>
+        <p class="answer" id="answer4" > You can click on the "About" button in the navigation bar to learn more about the developers and our backstory!</p>
+
+        <p class="question" onclick="drop(5)"> <strong>How can I reach out and send a message about an issue or suggestion?</strong> </p>
+        <p class="answer" id="answer5" > You can reach us through our Contact Form. Click on the "Contact" button in the navigation bar and fill out the form, or use the Google Form if preferred. </p>
+
+        <p class="question" onclick="drop(6)"> <strong>Where can I read books online for free?</strong> </p>
+        <p class="answer" id="answer6" > There are several great websites that offer free books legally: OceanPDF, Library Genesis, Open Library, and Libby By Overdrive are great platforms.</p>
+
+        <p class="question" onclick="drop(7)"> <strong> Are there places to watch movies for free online?</strong> </p>
+        <p class="answer" id="answer7" >Absolutely! Here are some legit sites with free streaming options: Freevee, 123movies, movies2watch, and Tubi. </p>
+    
+        <div id="footer">
+
+            <h2>Books &amp; Co</h2>
+
+            <p>&#169; 2025 Co. All Rights Reserved.</p>
+        </div>
+    </div>
+    
+    <div id="resultspage" class="page">
+        <button id="backButton">← Back</button>
+        <h2 style="font-size: 30px; color: #578E7E; text-align: center;">Search Results</h2>
+        <div id="results" class="resultscontainer"></div>
+    </div>
+
+    <script>
+        const searchToggle = document.getElementById('searchToggle');
+        const searchBox = document.getElementById('searchBox');
+        const homepage = document.getElementById('homepage');
+        const resultspage = document.getElementById('resultspage');
+        const resultscontainer = document.getElementById('results');
+        const backButton = document.getElementById('backButton');
+
+        searchToggle.addEventListener('click', () => {
+          searchBox.classList.toggle('expanded');
+          if (searchBox.classList.contains('expanded')) {
+            searchBox.focus();
+          }
+        });
+
+        // Trigger search on Enter key
+        searchBox.addEventListener('keydown', async (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            const query = searchBox.value.trim();
+            if (!query) return;
+
+            homepage.classList.add('slide-left');
+            resultspage.classList.add('active');
+
+            const results = await searchMedia(query);
+            displayResults(results);
+          }
+        });
+
+        // Back button logic
+        backButton.addEventListener('click', () => {
+          homepage.classList.remove('slide-left');
+          resultspage.classList.remove('active');
+          searchBox.value = '';
+          resultscontainer.innerHTML = '';
+        });
+
+        document.querySelector('.dropdown-toggle').addEventListener('click', (e) => {
+              e.preventDefault();
+              document.querySelector('.dropdown-menu').classList.toggle('show');
+          });
+    </script>
+    <script src="searchresults.js"></script>
+
+
+    <script>
+      fetch('/api/profile')
+        .then(res => res.json())
+        .then(data => {
+          if (data.username) {
+            document.getElementById('user-greeting').innerText = `Welcome, ${data.username}!`;
+          }
+        })
+        .catch(err => {
+          console.error('Failed to load username:', err);
+        });
+    </script>
+    <button id="darkModeToggle" class="light" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> </button>
+
+</body>
+</html>
