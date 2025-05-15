@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="Booksandco.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="script.js" defer></script>
     <title>Books&Co</title>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -276,6 +277,34 @@
             document.querySelector('.dropdown-menu').classList.toggle('show');
         });
     </script>
-    <script src="searchresults.js"></script>
+     <script src="searchresults.js"></script>
+        <!-- 🟡 FOLLOW BUTTON + TOGGLE -->
+    <button id="toggleFollow" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; padding: 10px; background-color: #333; color: white; border: none; border-radius: 5px;" class="light" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> </button>
+
+    <script>
+        const toggleBtn = document.getElementById('toggleFollow');
+        const followBtn = document.getElementById('followBtn');
+        let followMode = false;
+
+        toggleBtn.addEventListener('click', () => {
+            followMode = !followMode;
+
+            if (followMode) {
+                followBtn.style.display = 'block';
+                toggleBtn.textContent = 'Disable Follow Mode';
+            } else {
+                followBtn.style.display = 'none';
+                toggleBtn.textContent = 'Enable Follow Mode';
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!followMode) return;
+            const offsetX = 15;
+            const offsetY = 15;
+            followBtn.style.left = (e.pageX + offsetX) + 'px';
+            followBtn.style.top = (e.pageY + offsetY) + 'px';
+        });
+    </script>
 </body>
 </html>
