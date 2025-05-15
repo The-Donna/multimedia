@@ -114,3 +114,76 @@ h1 {
    color: #578E7E; 
    text-align: center;
 }
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.dark-mode h1 {
+    color: #90caf9;
+}
+
+.dark-mode #bookresults,
+.dark-mode #moviesresults,
+.dark-mode #searchresults {
+    background-color: #57838E
+}
+
+.dark-mode #bookresults div,
+.dark-mode #moviesresults div {
+    background-color: #57838E;
+    color: #e0e0e0;
+}
+
+.dark-mode #bookresults h3,
+.dark-mode #moviesresults h3 {
+    color: #ffffff;
+}
+
+.dark-mode #bookresults p,
+.dark-mode #moviesresults p {
+    color: #c0c0c0;
+}
+
+/* Toggle Button Styling */
+.dark-toggle-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #578E7E;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+}
+
+.dark-toggle-btn:hover {
+    background-color: #3d6e5e;
+}
+.dark-toggle-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background-color: #578E7E;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.dark-toggle-btn:hover {
+    background-color: #406c60;
+    transform: scale(1.1);
+}
+
