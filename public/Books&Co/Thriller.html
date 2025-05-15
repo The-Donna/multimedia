@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="genre.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Comedy</title>
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div id="homepage">
@@ -259,6 +260,36 @@
         })
         .catch(err => {
           console.error('Failed to load username:', err);
+        });
+    </script>
+    </script>
+    <!-- 🟡 FOLLOW BUTTON + TOGGLE -->
+    <button id="toggleFollow" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; padding: 10px; background-color: #333; color: white; border: none; border-radius: 5px;" class="light" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> </button>
+
+
+    <script>
+        const toggleBtn = document.getElementById('toggleFollow');
+        const followBtn = document.getElementById('followBtn');
+        let followMode = false;
+
+        toggleBtn.addEventListener('click', () => {
+            followMode = !followMode;
+
+            if (followMode) {
+                followBtn.style.display = 'block';
+                toggleBtn.textContent = 'Disable Follow Mode';
+            } else {
+                followBtn.style.display = 'none';
+                toggleBtn.textContent = 'Enable Follow Mode';
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!followMode) return;
+            const offsetX = 15;
+            const offsetY = 15;
+            followBtn.style.left = (e.pageX + offsetX) + 'px';
+            followBtn.style.top = (e.pageY + offsetY) + 'px';
         });
     </script>
 </body>
