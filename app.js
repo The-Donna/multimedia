@@ -7,6 +7,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const User = require('./models/User');
 const Profile = require('./models/Profile');
+const favoritesRoute = require('./routes/favorite');
 require('./db');
 
 const app = express();
@@ -47,6 +48,7 @@ function ensureAuthenticated(req, res, next) {
 
 app.use('/auth', require('./routes/auth'));
 app.use('/api/comments', require('./routes/comments'));
+app.use('/api/favorites', favoritesRoute);
 
 const historyRoute = require('./routes/history');
 app.use('/api/history', ensureAuthenticated, historyRoute);
@@ -94,6 +96,7 @@ app.get('/history', ensureAuthenticated, async (req, res) => {
   const profile = await Profile.findOne({ user: req.user._id });
   res.render('history', { history: profile?.history || [] });
 });
+
 
 app.use((req, res) => {
   res.status(404).send("Custom 404: Page not found");

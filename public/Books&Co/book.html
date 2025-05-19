@@ -9,36 +9,37 @@
 
     <title>Movie</title>
     <style>
-       .comment-box { 
-            margin-top: 15px; 
+        .comment-box {
+            margin-top: 15px;
         }
-        
+
         .comment {
-            margin-bottom: 10px; 
-            border-bottom: 1px solid #ccc; 
-            padding: 10px; 
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
             color: #F5ECD5;
             font-size: 17px;
         }
-        
-        #comments { 
+
+        #comments {
             width: 75%;
             margin: auto;
-            padding: 10px; 
+            padding: 10px;
             background-color: #578E7E;
             border-radius: 20px;
-        } 
+        }
 
         input, textarea {
             width: 60%;
         }
 
-        #movie-container {
+        #samplePages {
             width: 75%;
-            margin: auto;
-            padding: 10px;
+            height: 600px;
+            margin: 20px auto;
+            border: 1px solid black;
         }
-
+    
         h3 {
             font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
             font-size: 25px;
@@ -76,8 +77,11 @@
             </ul>
         </div>
 
-        <div id="samplePages" style="width: 100%; height: 600px;"></div>
+        <div id="samplePages">
+            <iframe id="googleBooksIframe" width="100%" height="100%" frameborder="0"></iframe>
+        </div>
         
+
         <div id="comments">
             <h3>Comments</h3>
             <form id="comment-box">
@@ -93,11 +97,8 @@
         <br>
 
         <div id="footer">
-
             <h2>Books &amp; Co</h2>
-
             <p>&#169; 2025 Co. All Rights Reserved.</p>
-
         </div>
     </div>
 
@@ -166,7 +167,8 @@
     </script>
 
     <script src="searchresults.js"></script>
-    <script src="book.js"></script>
-  
+    <script src="dynamicPreview.js"></script>
+    
+
 </body>
 </html>

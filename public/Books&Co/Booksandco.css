@@ -340,3 +340,11 @@ img {
 .dropdown:hover {
   transform: translateY(-3px);
 }
+
+.bookmark-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: gold;
+}

@@ -84,6 +84,7 @@
                         const infoLink = book.volumeInfo?.infoLink;
 
                         const bookElement = document.createElement('div');
+                        bookElement.style.cursor = 'pointer';
                         bookElement.innerHTML = `
                             <img src="${thumbnail}" alt="${title}">
                             <h3>${title}</h3>
@@ -163,6 +164,9 @@
                                         <p><strong>Overview:</strong> ${overview}</p>
                                     </div>
                                 </a>
+                                <button class="bookmark-btn" data-movie='${JSON.stringify(movie)}' title="Add to Favorites">
+                                    ⭐
+                                </button>
                             `;
 
                             movieList.appendChild(movieDiv);
@@ -238,6 +242,7 @@
           });
     </script>
     <script src="searchresults.js"></script>
+    <script src="favorites.js"></script>
 
 
     <script>
