@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="Booksandco.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>FAQ</title>
+    <script src="script.js" defer></script>
 
     <style>
         .answer {
@@ -65,7 +66,9 @@
             <a href="Index.html"><img src="Logo.png" alt="logo"></a>
             </div>
             <ul class="nav-right">
-                <li><a href="Index.html">Home</a></li>
+            <div id="homecss">
+            <li><a href="Index.html">Home</a></li>
+            </div>
                 <li id="search" class="search-container">
                     <button id="searchToggle" aria-label="Search">
                         <i class="fas fa-search"></i>
@@ -82,9 +85,15 @@
                         <li><a href="Comedy.html">Comedy</a></li>
                     </ul>
                 </li>
+                <div id="aboutcss">
                 <li><a href="About.html">About</a></li>
+                </div>
+                <div id="contactcss">
                 <li><a href="Contact.html">Contact</a></li>
+                </div>
+                <div id="faqcss">
                 <li><a href="FAQ.html">FAQ</a></li>
+                </div>
             </ul>
         </div>
 
@@ -181,6 +190,34 @@
         })
         .catch(err => {
           console.error('Failed to load username:', err);
+        });
+    </script>
+    <button id="toggleFollow" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; padding: 10px; background-color: #333; color: white; border: none; border-radius: 5px;" class="light" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> </button>
+
+
+    <script>
+        const toggleBtn = document.getElementById('toggleFollow');
+        const followBtn = document.getElementById('followBtn');
+        let followMode = false;
+
+        toggleBtn.addEventListener('click', () => {
+            followMode = !followMode;
+
+            if (followMode) {
+                followBtn.style.display = 'block';
+                toggleBtn.textContent = 'Disable Follow Mode';
+            } else {
+                followBtn.style.display = 'none';
+                toggleBtn.textContent = 'Enable Follow Mode';
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!followMode) return;
+            const offsetX = 15;
+            const offsetY = 15;
+            followBtn.style.left = (e.pageX + offsetX) + 'px';
+            followBtn.style.top = (e.pageY + offsetY) + 'px';
         });
     </script>
 
