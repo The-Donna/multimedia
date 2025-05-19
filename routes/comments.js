@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Comment = require('../models/Comment');
 
-// GET comments for a movie
+
 router.get('/:movieId', async (req, res) => {
     try {
         const comments = await Comment.find({ movieId: req.params.movieId }).sort({ timestamp: -1 });
@@ -12,7 +12,7 @@ router.get('/:movieId', async (req, res) => {
     }
 });
 
-// POST a new comment
+
 router.post('/', async (req, res) => {
     const { movieId, username, comment } = req.body;
     if (!movieId || !username || !comment) {

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Favorites = require('../models/Favorites');
 
-// POST /api/favorites - Save a movie as a favorite
+
 router.post('/', async (req, res) => {
     try {
         const favorite = new Favorites(req.body);

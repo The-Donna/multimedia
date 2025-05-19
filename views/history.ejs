@@ -6,20 +6,51 @@
     body { font-family: Arial, sans-serif; padding: 20px; background: #fdfaf4; color: #333; }
     h1 { color: #578E7E; }
     ul { list-style-type: none; padding: 0; }
-    li { margin: 10px 0; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+    li { 
+      margin: 10px 0; 
+      border-bottom: 1px solid #ccc; 
+      padding-bottom: 5px;
+    }
+
+    a.history-link {
+      color: #578E7E;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a.history-link:hover {
+      text-decoration: underline;
+    }
+
   </style>
 </head>
 <body>
   <h1>Your Viewing History</h1>
+
   <% if (history.length === 0) { %>
     <p>No history found yet.</p>
   <% } else { %>
     <ul>
       <% history.forEach(item => { %>
-        <li><strong><%= item.title %></strong> (<%= item.type %>) - <%= item.dateViewed.toDateString() %></li>
+        <li>
+          <% if (item.type === 'book') { %>
+            <a class="history-link" href="https://books.google.com/books?id=<%= item.itemId %>" target="_blank">
+              <%= item.title %>
+            </a>
+            (<%= item.type %>) - <%= item.dateViewed.toDateString() %>
+          <% } else if (item.type === 'movie') { %>
+            <a class="history-link" href="/Books&Co/movie.html?id=<%= item.itemId %>">
+              <%= item.title %>
+            </a>
+            (<%= item.type %>) - <%= item.dateViewed.toDateString() %>
+          <% } else { %>
+            <strong><%= item.title %></strong> (<%= item.type %>) - <%= item.dateViewed.toDateString() %>
+          <% } %>
+        </li>
       <% }) %>
     </ul>
   <% } %>
+
   <a href="/Books&Co/Index.html">← Back to Home</a>
 </body>
 </html>

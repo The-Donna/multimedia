@@ -77,7 +77,7 @@
       
       
         <div id="movie-container"></div>
-
+          
         <div id="comments">
             <h3>Comments</h3>
             <form id="comment-box">
@@ -152,22 +152,46 @@
 
     </script>
 
-    <script>
-        fetch('/api/profile')
-        .then(res => res.json())
-        .then(data => {
-            if (data.username) {
-            document.getElementById('user-greeting').innerText = `Welcome, ${data.username}!`;
-            }
-        })
-        .catch(err => {
-            console.error('Failed to load username:', err);
-        });
-    </script>
-
     
     <script src="searchresults.js"></script>
     <script src="movie.js"></script>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', async () => {
+          const params = new URLSearchParams(window.location.search);
+          const movieTitle = params.get('id');
+      
+          if (!movieTitle) return;
+      
+          try {
+            const tmdbApiKey = 'removed';
+            const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${tmdbApiKey}&query=${encodeURIComponent(movieTitle)}`;
+            const searchRes = await fetch(searchUrl);
+            const searchData = await searchRes.json();
+            const movieId = searchData.results[0]?.id;
+      
+            if (!movieId) {
+              document.getElementById('samplePages').innerHTML = `<p style="color:red;">No trailer found for ${movieTitle}</p>`;
+              return;
+            }
+      
+            const videoUrl = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${tmdbApiKey}`;
+            const videoRes = await fetch(videoUrl);
+            const videoData = await videoRes.json();
+            const trailer = videoData.results.find(v => v.type === 'Trailer' && v.site === 'YouTube');
+      
+            if (trailer) {
+              document.getElementById('googleBooksIframe').src = `https://www.youtube.com/embed/${trailer.key}`;
+            } else {
+              document.getElementById('samplePages').innerHTML = `<p style="color:red;">No trailer found.</p>`;
+            }
+          } catch (err) {
+            console.error("Trailer fetch error:", err);
+            document.getElementById('samplePages').innerHTML = `<p style="color:red;">Failed to load trailer.</p>`;
+          }
+        });
+      </script>
+      
   
 </body>
 </html>

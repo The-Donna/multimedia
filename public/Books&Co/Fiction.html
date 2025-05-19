@@ -51,20 +51,18 @@
             <h1>Books</h1>
             <div id="bookresults"></div>
             <script>
-                const apiKey = 'AIzaSyBrXyc5lfr3wRJR70zr65Kh0tm7fPIU2oM'; // Replace with your actual API key
+                const apiKey = 'AIzaSyBrXyc5lfr3wRJR70zr65Kh0tm7fPIU2oM'; 
 
                 async function searchFictionBooks() {
-                    const genre = 'fiction'; // The genre you want to search
+                    const genre = 'fiction';
                     const maxResults = 24;
                     const url = `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&key=${apiKey}&maxResults=${maxResults}&_=${Date.now()}`;
                     try {
-                        console.log("Fetching from URL:", url);
                         const response = await fetch(url);
                         if (!response.ok) {
                             throw new Error(`HTTP error! Status: ${response.status}`);
                         }
                         const data = await response.json();
-                        console.log("API Response:", data);
                         const books = data.items || [];
                         displayBookResults(books);
                     } catch (error) {
@@ -91,18 +89,36 @@
                         const description = book.volumeInfo?.description || "No description available";
                         const infoLink = book.volumeInfo?.infoLink;
 
-                        const bookElement = document.createElement('div');
-                        bookElement.innerHTML = `
+                        const bookElement = document.createElement('a');
+                        bookElement.href = infoLink;
+                        bookElement.target = '_blank';
+                        bookElement.style.textDecoration = 'none';
+                        bookElement.style.color = 'inherit';
+
+                        const contentDiv = document.createElement('div');
+                        contentDiv.innerHTML = `
                             <img src="${thumbnail}" alt="${title}">
                             <h3>${title}</h3>
                             <p><strong>Author(s):</strong> ${authors}</p>
-                            <p><strong>Description:</strong> ${description.substring(0, 300)}...</p> <!-- Limit description length -->
+                            <p><strong>Description:</strong> ${description.substring(0, 300)}...</p>
                         `;
 
-                        bookElement.addEventListener('click', () => {
-                            window.location.href = `book.html?id=${book.id}`;
+                        bookElement.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            fetch('/api/history', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                credentials: 'include',
+                                body: JSON.stringify({
+                                    itemId: book.id || title,
+                                    title,
+                                    type: 'book'
+                                })
+                            }).catch(err => console.error("History error:", err));
+                            window.open(infoLink, '_blank');
                         });
 
+                        bookElement.appendChild(contentDiv);
                         resultsDiv.appendChild(bookElement);
                     });
                 }
@@ -117,7 +133,7 @@
             <div id="moviesresults"></div>
             <script>
                 const API_KEY = 'removed'; 
-                const genreId = 35; // Comedy
+                const genreId = 35; 
                 const MOVIES_TO_FETCH = 24;
 
                 async function fetchExactlyMovies(limit) {
@@ -132,7 +148,7 @@
                             if (data.results && data.results.length > 0) {
                                 allResults = allResults.concat(data.results);
                             } else {
-                                break; // no more results
+                                break; 
                             }
                         } catch (error) {
                             console.error(`Error fetching page ${page}:`, error);
@@ -259,7 +275,7 @@
           console.error('Failed to load username:', err);
         });
     </script>
-     <!-- 🟡 FOLLOW BUTTON + TOGGLE -->
+    
     <button id="toggleFollow" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; padding: 10px; background-color: #333; color: white; border: none; border-radius: 5px;" class="light" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> </button>
 
 

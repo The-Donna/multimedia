@@ -55,7 +55,7 @@
                 const apiKey = 'AIzaSyBrXyc5lfr3wRJR70zr65Kh0tm7fPIU2oM';
 
                 async function searchFictionBooks() {
-                    const genre = 'romance'; // The genre you want to search
+                    const genre = 'romance'; 
                     const maxResults = 24;
                     const url = `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&key=${apiKey}&maxResults=${maxResults}&_=${Date.now()}`;
                     try {
@@ -73,6 +73,7 @@
                         document.getElementById('bookresults').innerHTML = `<p style="color:red;">Error fetching book data: ${error.message}</p>`;
                     }
                 }
+
 
                 function displayBookResults(books) {
                     const resultsDiv = document.getElementById('bookresults');
@@ -92,18 +93,36 @@
                         const description = book.volumeInfo?.description || "No description available";
                         const infoLink = book.volumeInfo?.infoLink;
 
-                        const bookElement = document.createElement('div');
-                        bookElement.innerHTML = `
+                        const bookElement = document.createElement('a');
+                        bookElement.href = infoLink;
+                        bookElement.target = '_blank';
+                        bookElement.style.textDecoration = 'none';
+                        bookElement.style.color = 'inherit';
+
+                        const contentDiv = document.createElement('div');
+                        contentDiv.innerHTML = `
                             <img src="${thumbnail}" alt="${title}">
                             <h3>${title}</h3>
                             <p><strong>Author(s):</strong> ${authors}</p>
-                            <p><strong>Description:</strong> ${description.substring(0, 300)}...</p> <!-- Limit description length -->
+                            <p><strong>Description:</strong> ${description.substring(0, 300)}...</p>
                         `;
 
-                        bookElement.addEventListener('click', () => {
-                            window.location.href = `book.html?id=${book.id}`;
+                        bookElement.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            fetch('/api/history', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                credentials: 'include',
+                                body: JSON.stringify({
+                                    itemId: book.id || title,
+                                    title,
+                                    type: 'book'
+                                })
+                            }).catch(err => console.error("History error:", err));
+                            window.open(infoLink, '_blank');
                         });
 
+                        bookElement.appendChild(contentDiv);
                         resultsDiv.appendChild(bookElement);
                     });
                 }
