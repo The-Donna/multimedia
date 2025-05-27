@@ -100,11 +100,16 @@
                             <h3>${title}</h3>
                             <p><strong>Author(s):</strong> ${authors}</p>
                             <p><strong>Description:</strong> ${description.substring(0, 300)}...</p> <!-- Limit description length -->
+                            <button class="bookmark-btn" data-book='${JSON.stringify(book)}' title="Add to Favorites">⭐</button>
                         `;
 
-                        bookElement.addEventListener('click', () => {
-                            window.location.href = `book.html?id=${book.id}`;
+                        bookElement.addEventListener('click', (e) => {
+                        if (e.target.classList.contains('bookmark-btn')) {
+                            return;
+                        }
+                        window.location.href = `book.html?id=${book.id}`;
                         });
+
 
                         resultsDiv.appendChild(bookElement);
                     });

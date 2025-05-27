@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your History</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #fdfaf4; color: #333; }
+    h1 { color: #578E7E; }
+    ul { list-style-type: none; padding: 0; }
+    li { 
+      margin: 10px 0; 
+      border-bottom: 1px solid #ccc; 
+      padding-bottom: 5px;
+    }
+
+    a.history-link {
+      color: #578E7E;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a.history-link:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Your Favorites</h1>
+
+  <% if (favorites.length === 0) { %>
+    <p>You have no favorite movies yet.</p>
+  <% } else { %>
+    <ul>
+      <% favorites.forEach(fav => { %>
+        <li>
+          <a class="favorite-link" href="https://www.themoviedb.org/movie/<%= fav.movieId %>" target="_blank">
+            <%= fav.title %>
+          </a>
+          <div><%= fav.release_date %></div>
+          <img src="https://image.tmdb.org/t/p/w200<%= fav.poster_path %>" alt="<%= fav.title %> poster">
+          <p><%= fav.overview %></p>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+  <a href="/Books&Co/Index.html">← Back to Home</a>
+</body>
+</html>

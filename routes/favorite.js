@@ -2,10 +2,18 @@ const express = require('express');
 const router = express.Router();
 const Favorites = require('../models/Favorites');
 
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) return next();
+  res.status(401).json({ error: 'Unauthorized' });
+}
 
-router.post('/', async (req, res) => {
+// Add a favorite
+router.post('/', ensureAuthenticated, async (req, res) => {
     try {
-        const favorite = new Favorites(req.body);
+        const favorite = new Favorites({
+            userId: req.user._id,
+            ...req.body
+        });
         await favorite.save();
         res.status(201).json({ message: 'Favorite saved' });
     } catch (err) {
@@ -15,5 +23,3 @@ router.post('/', async (req, res) => {
 });
 
 module.exports = router;
-
-

@@ -1,31 +1,59 @@
-const bookmarkBtn = movieDiv.querySelector('.bookmark-btn');
-bookmarkBtn.addEventListener('click', async (event) => {
-    event.preventDefault(); // prevent default link behavior if inside <a>
+document.addEventListener("click", async function (e) {
+    if (e.target.classList.contains("bookmark-btn")) {
+        const button = e.target;
+        const bookData = button.getAttribute("data-book");
+        const movieData = button.getAttribute("data-movie");
 
-    const movieData = JSON.parse(event.currentTarget.getAttribute('data-movie'));
-
-    try {
-        const response = await fetch('/api/favorites', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                movieId: movieData.id,
-                title: movieData.title,
-                poster_path: movieData.poster_path,
-                overview: movieData.overview,
-                release_date: movieData.release_date,
-            }),
-        });
+        let payload;
 
         if (response.ok) {
-            alert('Movie added to favorites!');
-        } else {
-            alert('Failed to add movie.');
+            button.textContent = "❤️";
+            alert("Added to favorites!");
         }
-    } catch (error) {
-        console.error('Error adding to favorites:', error);
-        alert('An error occurred.');
+
+
+        if (bookData) {
+            const book = JSON.parse(bookData);
+            payload = {
+                itemId: book.id,
+                itemType: "book",
+                title: book.volumeInfo?.title || "Unknown Title",
+                authors: book.volumeInfo?.authors || [],
+                thumbnail: book.volumeInfo?.imageLinks?.thumbnail || "",
+                description: book.volumeInfo?.description || ""
+            };
+        } else if (movieData) {
+            const movie = JSON.parse(movieData);
+            payload = {
+                itemId: movie.id,
+                itemType: "movie",
+                title: movie.title || "Unknown Title",
+                poster: movie.poster_path 
+                    ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` 
+                    : "",
+                overview: movie.overview || ""
+            };
+        } else {
+            console.error("No valid data to favorite.");
+            return;
+        }
+
+        try {
+            const response = await fetch("/api/favorites", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (response.ok) {
+                alert("Added to favorites!");
+            } else {
+                alert("Failed to add to favorites.");
+            }
+        } catch (err) {
+            console.error("Error adding to favorites:", err);
+        }
     }
 });
