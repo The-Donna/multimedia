@@ -21,7 +21,6 @@
     a.history-link:hover {
       text-decoration: underline;
     }
-
   </style>
 </head>
 <body>
@@ -37,14 +36,14 @@
             <a class="history-link" href="https://books.google.com/books?id=<%= item.itemId %>" target="_blank">
               <%= item.title %>
             </a>
-            (<%= item.type %>) - <%= item.dateViewed.toDateString() %>
+            (<%= item.type %>) - <%= item.dateViewed ? new Date(item.dateViewed).toDateString() : "Unknown Date" %>
           <% } else if (item.type === 'movie') { %>
             <a class="history-link" href="/Books&Co/movie.html?id=<%= item.itemId %>">
               <%= item.title %>
             </a>
-            (<%= item.type %>) - <%= item.dateViewed.toDateString() %>
+            (<%= item.type %>) - <%= item.dateViewed ? new Date(item.dateViewed).toDateString() : "Unknown Date" %>
           <% } else { %>
-            <strong><%= item.title %></strong> (<%= item.type %>) - <%= item.dateViewed.toDateString() %>
+            <strong><%= item.title %></strong> (<%= item.type %>) - <%= item.dateViewed ? new Date(item.dateViewed).toDateString() : "Unknown Date" %>
           <% } %>
         </li>
       <% }) %>

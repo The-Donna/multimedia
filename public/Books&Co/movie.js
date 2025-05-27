@@ -23,6 +23,7 @@ async function loadMovieDetails() {
 
     const videoRes = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}`);
     const videoData = await videoRes.json();
+    console.log(videoData.results);
     const trailer = videoData.results.find(v => v.type === 'Trailer' && v.site === 'YouTube');
 
     const container = document.getElementById('movie-container');

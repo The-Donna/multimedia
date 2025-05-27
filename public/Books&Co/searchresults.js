@@ -25,6 +25,7 @@ async function searchMedia(query) {
     const movies = tmdbData.results?.map(movie => ({
       type: 'movie',
       title: movie.title,
+      id: movie.id,
       overview: movie.overview,
       poster: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : null,
       release_date: movie.release_date
@@ -86,19 +87,20 @@ function displayResults(results) {
       container.appendChild(wrapper);
     }
 
-    else if (item.type === 'movie') {
+    else if (item.type === 'movie' && item.id) {
       card.style.cursor = 'pointer';
       card.onclick = () => {
         fetch('/api/history', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
-          body: JSON.stringify({ itemId: item.title, title: item.title, type: 'movie' })
+          body: JSON.stringify({ itemId: item.id, title: item.title, type: 'movie' })
         }).finally(() => {
-          window.location.href = `movie.html?id=${encodeURIComponent(item.title)}`;
+          window.location.href = `movie.html?id=${item.id}`;
         });
       };
       container.appendChild(card);
     }
   });
+
 }
