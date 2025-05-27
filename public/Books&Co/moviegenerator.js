@@ -23,24 +23,41 @@ const apiKey = 'removed'; // Replace this with your TMDB API key
         }
 
         function displayMovie(movie) {
-        const poster = movie.poster_path
-            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-            : 'https://via.placeholder.com/300x450?text=No+Image';
-
-        const movieUrl = `https://www.themoviedb.org/movie/${movie.id}`;
-
-
-        card.innerHTML = `
-            <a href="${movieUrl}" target="_blank" style="text-decoration: none; color: inherit;">
-            <img src="${poster}" alt="${movie.title}">
-            <h2>${movie.title}</h2>
-            <div class="movie-meta">
-                <span>📅 ${movie.release_date || 'N/A'} | ⭐ ${movie.vote_average || 'N/A'}</span>
-            </div>
-            <p>${movie.overview ? movie.overview.slice(0, 150) + '...' : 'No description available.'}</p>
-            </a>
-        `;
-        }
+            const poster = movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+              : 'https://via.placeholder.com/300x450?text=No+Image';
+          
+            const movieUrl = `https://www.themoviedb.org/movie/${movie.id}`;
+          
+            // 🔥 Save to history
+            fetch('/api/history', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              credentials: 'include',
+              body: JSON.stringify({
+                itemId: movie.id,
+                title: movie.title,
+                type: 'movie'
+              })
+            })
+              .then(res => {
+                if (!res.ok) throw new Error("Failed to save movie history");
+                console.log("🎬 Movie saved to history:", movie.title);
+              })
+              .catch(err => console.error("❌ Movie history error:", err));
+          
+            card.innerHTML = `
+              <a href="${movieUrl}" target="_blank" style="text-decoration: none; color: inherit;">
+                <img src="${poster}" alt="${movie.title}">
+                <h2>${movie.title}</h2>
+                <div class="movie-meta">
+                    <span>📅 ${movie.release_date || 'N/A'} | ⭐ ${movie.vote_average || 'N/A'}</span>
+                </div>
+                <p>${movie.overview ? movie.overview.slice(0, 150) + '...' : 'No description available.'}</p>
+              </a>
+            `;
+          }
+          
 
         // Initial call + update every 10 seconds
         getRandomMovie();

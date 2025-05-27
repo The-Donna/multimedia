@@ -93,10 +93,20 @@ app.post('/api/search', async (req, res) => {
 
 
 app.get('/history', ensureAuthenticated, async (req, res) => {
-  console.log("User:", req.user); 
-  const profile = await Profile.findOne({ user: req.user._id });
-  res.render('history', { history: profile?.history || [] });
+  console.log("User:", req.user);
+
+  let profile = await Profile.findOne({ user: req.user._id });
+
+  if (!profile) {
+    profile = new Profile({ user: req.user._id, history: [], savedSearches: [] });
+    await profile.save();
+    console.log("🆕 Created profile for:", req.user.email);
+  }
+
+  const sorted = profile.history.sort((a, b) => new Date(b.dateViewed) - new Date(a.dateViewed));
+  res.render('history', { history: sorted });
 });
+
 
 
 app.use((req, res) => {

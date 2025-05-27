@@ -14,7 +14,7 @@ async function submitComment() {
     await fetch('/api/comments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ movieId: bookId, username, comment }) // 🔸 Using movieId key!
+        body: JSON.stringify({ movieId: bookId, username, comment })
     });
 
     loadComments();
@@ -33,7 +33,7 @@ function embedSpecificGoogleBook(bookId) {
 
   if (!bookId) {
     console.warn('No book ID provided in the URL.');
-    iframe.src = 'about:blank'; // Or a default message
+    iframe.src = 'about:blank'; 
     return;
   }
 

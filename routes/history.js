@@ -16,13 +16,14 @@ router.post('/', ensureAuthenticated, async (req, res) => {
   try {
     let profile = await Profile.findOne({ user: userId });
 
-   
     if (!profile) {
       profile = new Profile({ user: userId, history: [], savedSearches: [] });
+      await profile.save(); // 🔥 You were missing this!
     }
 
-    profile.history.unshift({ title, type, itemId });
-    profile.history = profile.history.slice(0, 20); 
+    profile.history.unshift({ title, type, itemId, dateViewed: new Date() });
+    await profile.save(); // 🔥 Save again after pushing
+
     console.log("✅ History saved:", title);
     res.status(200).send('History updated');
   } catch (err) {
@@ -32,10 +33,11 @@ router.post('/', ensureAuthenticated, async (req, res) => {
 });
 
 
+
 router.get('/', ensureAuthenticated, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user._id });
-    res.json(profile?.history || []);
+    res.render('history', { history: profile?.history || [] });
   } catch (err) {
     console.error("❌ Error fetching history:", err);
     res.status(500).send('Error fetching history');
