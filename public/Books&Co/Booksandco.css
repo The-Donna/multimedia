@@ -719,8 +719,9 @@ img {
 
 /* === DARK MODE === */
 body.dark-mode {
-  background-color: #70A898;
-  color: #F5ECD5;
+  background-color: #084E40;
+  border-color: #0F8F75;
+  color: #04CDA4;
 }
 
 .nav-container.dark-mode {
