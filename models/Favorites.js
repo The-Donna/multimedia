@@ -6,8 +6,10 @@ const favoriteSchema = new mongoose.Schema({
     bookId: String,  
     title: String,
     poster_path: String,
-    overview: String,
-    release_date: String,
+    overview: String,    
+    release_date: String, 
+    thumbnail: String,   
+    description: String  
 });
 
 module.exports = mongoose.model('Favorites', favoriteSchema);

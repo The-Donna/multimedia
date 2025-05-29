@@ -56,17 +56,6 @@ app.use('/api/history', ensureAuthenticated, historyRoute);
 
 const Favorites = require('./models/Favorites'); 
 
-app.get('/favorites', ensureAuthenticated, async (req, res) => {
-  try {
-    const favorites = await Favorites.find({ user: req.user._id });
-    res.render('favorites', { favorites });
-  } catch (err) {
-    console.error('Error fetching favorites:', err);
-    res.status(500).send('Server error');
-  }
-});
-
-
 app.get('/', (req, res) => {
   if (req.isAuthenticated()) return res.redirect('/Books&Co/Index.html');
   res.redirect('/login');
@@ -118,6 +107,16 @@ app.get('/history', ensureAuthenticated, async (req, res) => {
 
   const sorted = profile.history.sort((a, b) => new Date(b.dateViewed) - new Date(a.dateViewed));
   res.render('history', { history: sorted });
+});
+
+app.get('/favorites', ensureAuthenticated, async (req, res) => {
+  try {
+    const favorites = await Favorites.find({ userId: req.user._id });
+    res.render('favorites', { favorites });
+  } catch (err) {
+    console.error('Error fetching favorites:', err);
+    res.status(500).send('Server error');
+  }
 });
 
 

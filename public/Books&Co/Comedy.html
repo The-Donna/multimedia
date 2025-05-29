@@ -56,17 +56,13 @@
                 const apiKey = 'AIzaSyBrXyc5lfr3wRJR70zr65Kh0tm7fPIU2oM'; 
 
                 async function searchFictionBooks() {
-                    const genre = 'comedy'; // The genre you want to search
+                    const genre = 'comedy';
                     const maxResults = 24;
                     const url = `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&key=${apiKey}&maxResults=${maxResults}&_=${Date.now()}`;
                     try {
-                        console.log("Fetching from URL:", url);
                         const response = await fetch(url);
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! Status: ${response.status}`);
-                        }
+                        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                         const data = await response.json();
-                        console.log("API Response:", data);
                         const books = data.items || [];
                         displayBookResults(books);
                     } catch (error) {
@@ -78,7 +74,7 @@
                 function displayBookResults(books) {
                     const resultsDiv = document.getElementById('bookresults');
                     if (!resultsDiv) {
-                        console.error("Error: 'results' div not found!");
+                        console.error("Error: 'bookresults' div not found!");
                         return;
                     }
                     resultsDiv.innerHTML = '';
@@ -86,6 +82,7 @@
                         resultsDiv.innerHTML = "<p>No fiction books found.</p>";
                         return;
                     }
+
                     books.forEach(book => {
                         const title = book.volumeInfo?.title || "No title available";
                         const authors = book.volumeInfo?.authors ? book.volumeInfo?.authors.join(", ") : "Unknown author";
@@ -93,30 +90,33 @@
                         const description = book.volumeInfo?.description || "No description available";
                         const infoLink = book.volumeInfo?.infoLink;
 
+                        const encodedBook = btoa(unescape(encodeURIComponent(JSON.stringify(book))));
+
                         const bookElement = document.createElement('div');
                         bookElement.style.cursor = 'pointer';
                         bookElement.innerHTML = `
                             <img src="${thumbnail}" alt="${title}">
                             <h3>${title}</h3>
                             <p><strong>Author(s):</strong> ${authors}</p>
-                            <p><strong>Description:</strong> ${description.substring(0, 300)}...</p> <!-- Limit description length -->
-                            <button class="bookmark-btn" data-book='${JSON.stringify(book)}' title="Add to Favorites">⭐</button>
+                            <p><strong>Description:</strong> ${description.substring(0, 300)}...</p>
+                            <button class="favorite-button" data-type="book" data-id="${book.id}" data-title="${encodeURIComponent(title)}" data-thumbnail="${encodeURIComponent(thumbnail)}" data-description="${encodeURIComponent(description)}">
+                                <i class="far fa-star"></i>
+                            </button>
                         `;
 
                         bookElement.addEventListener('click', (e) => {
-                        if (e.target.classList.contains('bookmark-btn')) {
-                            return;
-                        }
-                        window.location.href = `book.html?id=${book.id}`;
+                            if (!e.target.closest('.favorite-button')) {
+                                window.location.href = `book.html?id=${book.id}`;
+                            }
                         });
-
-
+                        
                         resultsDiv.appendChild(bookElement);
                     });
                 }
 
                 window.onload = searchFictionBooks;
             </script>
+
         
             
             <br>
@@ -141,7 +141,7 @@
                             if (data.results && data.results.length > 0) {
                                 allResults = allResults.concat(data.results);
                             } else {
-                                break; // no more results
+                                break; 
                             }
                         } catch (error) {
                             console.error(`Error fetching page ${page}:`, error);
@@ -179,8 +179,8 @@
                                         <p><strong>Overview:</strong> ${overview}</p>
                                     </div>
                                 </a>
-                                <button class="bookmark-btn" data-movie='${JSON.stringify(movie)}' title="Add to Favorites">
-                                    ⭐
+                                <button class="favorite-button" data-type="movie" data-id="${movie.id}" data-title="${encodeURIComponent(movie.title)}" data-poster_path="${encodeURIComponent(posterUrl)}" data-overview="${encodeURIComponent(movie.overview)}" data-release_date="${encodeURIComponent(movie.release_date)}">
+                                    <i class="far fa-star"></i>
                                 </button>
                             `;
 
@@ -191,7 +191,7 @@
                     }
                 }
 
-                // Run it
+        
                 fetchExactlyMovies(MOVIES_TO_FETCH).then(displayMovies);
             </script>
 
@@ -272,7 +272,7 @@
           console.error('Failed to load username:', err);
         });
     </script>
-        <!-- 🟡 FOLLOW BUTTON + TOGGLE -->
+       
     <button id="toggleFollow" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; padding: 10px; background-color: #333; color: white; border: none; border-radius: 5px;" class="light" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> </button>
 
 

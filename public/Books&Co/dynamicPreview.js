@@ -1,4 +1,46 @@
-const bookId = new URLSearchParams(window.location.search).get('id');
+const itemId = new URLSearchParams(window.location.search).get('id');
+google.books.load(); 
+
+function initializeGoogleBookViewer() {
+    if (!itemId) {
+        console.warn("No book ID found in URL for Google Books Viewer.");
+        document.getElementById('samplePages').innerHTML = '<p>No book selected for preview.</p>';
+        return;
+    }
+
+    const viewerContainer = document.getElementById('samplePages');
+    if (!viewerContainer) {
+        console.error("Viewer container #samplePages not found.");
+        return;
+    }
+
+    fetch(`https://www.googleapis.com/books/v1/volumes/${itemId}`)
+        .then(res => res.json())
+        .then(data => {
+            const title = data.volumeInfo.title || 'No Title Available';
+            const overview = data.volumeInfo.description || 'No description available.';
+
+            document.getElementById('bookTitle').textContent = title;
+            document.getElementById('bookOverview').textContent = overview;
+        })
+        .catch(err => {
+            console.error('Failed to fetch book details:', err);
+            document.getElementById('bookTitle').textContent = 'Book details unavailable';
+        });
+
+    const viewer = new google.books.DefaultViewer(viewerContainer);
+    viewer.load(itemId, function(statusCode) {
+        if (statusCode === 200 || statusCode === google.books.Viewer.StatusCode.SUCCESS) {
+            console.log('Google Books Viewer loaded successfully for ID:', itemId);
+        } else {
+            console.error('Error loading Google Books Viewer. Status:', statusCode);
+            viewerContainer.innerHTML = `<p style="color:red;">Failed to load book preview (Error Code: ${statusCode}). This book might not have sample pages available, or there's a policy restriction.</p>`;
+        }
+    });
+}
+
+// Set a callback to run when the Google Books API is fully loaded
+google.books.setOnLoadCallback(initializeGoogleBookViewer);
 
 async function loadComments() {
     const response = await fetch(`/api/comments/${movieId}`);
@@ -8,63 +50,18 @@ async function loadComments() {
 }
 
 async function submitComment() {
-    const username = document.getElementById('user').value;
-    const comment = document.getElementById('commentText').value;
+  const username = document.getElementById('user').value; 
+  const comment = document.getElementById('commentText').value;
 
-    await fetch('/api/comments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ movieId: bookId, username, comment })
-    });
+  await fetch('/api/comments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ movieId: bookId, username, comment }) 
+  });
 
-    loadComments();
+  loadComments();
 }
 
-window.onload = function () {
-    loadComments();
-    // Load book details here too
-};
-
-
-const iframe = document.getElementById('googleBooksIframe');
-
-function embedSpecificGoogleBook(bookId) {
-  const apiKey = 'AIzaSyBrXyc5lfr3wRJR70zr65Kh0tm7fPIU2oM'; 
-
-  if (!bookId) {
-    console.warn('No book ID provided in the URL.');
-    iframe.src = 'about:blank'; 
-    return;
-  }
-
-  let apiUrl = `https://www.googleapis.com/books/v1/volumes/${encodeURIComponent(bookId)}`;
-  if (apiKey) {
-    apiUrl += `?key=${apiKey}`;
-  }
-
-  fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-      if (data?.volumeInfo?.previewLink) {
-        const previewLink = data.volumeInfo.previewLink.replace('view', 'preview');
-        iframe.src = previewLink;
-      } else {
-        console.warn(`No preview available for book ID: ${bookId}`);
-        iframe.src = 'about:blank'; // Or a message indicating no preview
-      }
-    })
-    .catch(error => {
-      console.error(`Error fetching book data for ID ${bookId}:`, error);
-      iframe.src = 'about:blank'; // Or an error message
-    });
-}
-
-// Call the function with the book ID when the page loads
-window.onload = function() {
-  if (bookId) {
-    embedSpecificGoogleBook(bookId);
-  } else {
-    console.log("No book ID found in the URL. Iframe will be blank.");
-    iframe.src = 'about:blank'; // Or a default state for book.html loaded directly
-  }
-};
+document.addEventListener('DOMContentLoaded', function() {
+  loadComments();
+});

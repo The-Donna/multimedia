@@ -1,59 +1,66 @@
-document.addEventListener("click", async function (e) {
-    if (e.target.classList.contains("bookmark-btn")) {
-        const button = e.target;
-        const bookData = button.getAttribute("data-book");
-        const movieData = button.getAttribute("data-movie");
+document.addEventListener('DOMContentLoaded', () => {
+    document.body.addEventListener('click', async (event) => {
+        const favoriteButton = event.target.closest('.favorite-button');
+        if (!favoriteButton) return;
 
-        let payload;
+        const icon = favoriteButton.querySelector('i');
+        const isFavorited = icon.classList.contains('fa-heart');
 
-        if (response.ok) {
-            button.textContent = "❤️";
-            alert("Added to favorites!");
-        }
+        const type = favoriteButton.dataset.type;
+        const id = favoriteButton.dataset.id;
+        const title = decodeURIComponent(favoriteButton.dataset.title);
 
-
-        if (bookData) {
-            const book = JSON.parse(bookData);
-            payload = {
-                itemId: book.id,
-                itemType: "book",
-                title: book.volumeInfo?.title || "Unknown Title",
-                authors: book.volumeInfo?.authors || [],
-                thumbnail: book.volumeInfo?.imageLinks?.thumbnail || "",
-                description: book.volumeInfo?.description || ""
-            };
-        } else if (movieData) {
-            const movie = JSON.parse(movieData);
-            payload = {
-                itemId: movie.id,
-                itemType: "movie",
-                title: movie.title || "Unknown Title",
-                poster: movie.poster_path 
-                    ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` 
-                    : "",
-                overview: movie.overview || ""
-            };
-        } else {
-            console.error("No valid data to favorite.");
-            return;
+        let payload = { title };
+        if (type === 'book') {
+            payload.bookId = id;
+            payload.thumbnail = decodeURIComponent(favoriteButton.dataset.thumbnail);
+            payload.description = decodeURIComponent(favoriteButton.dataset.description);
+        } else if (type === 'movie') {
+            payload.movieId = parseInt(id); 
+            payload.poster_path = decodeURIComponent(favoriteButton.dataset.poster_path);
+            payload.overview = decodeURIComponent(favoriteButton.dataset.overview);
+            payload.release_date = decodeURIComponent(favoriteButton.dataset.release_date);
         }
 
         try {
-            const response = await fetch("/api/favorites", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(payload),
-            });
-
-            if (response.ok) {
-                alert("Added to favorites!");
+            if (isFavorited) {
+                const response = await fetch(`/api/favorites/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                icon.classList.remove('fa-solid', 'fa-heart');
+                icon.classList.add('far', 'fa-star');
+                console.log(`${title} unfavorited.`);
             } else {
-                alert("Failed to add to favorites.");
+                const response = await fetch('/api/favorites', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                icon.classList.remove('far', 'fa-star');
+                icon.classList.add('fa-solid', 'fa-heart');
+                console.log(`${title} favorited!`);
             }
-        } catch (err) {
-            console.error("Error adding to favorites:", err);
+        } catch (error) {
+            console.error('Error updating favorite status:', error);
+            if (isFavorited) {
+                icon.classList.remove('fa-solid', 'fa-heart');
+                icon.classList.add('far', 'fa-star');
+            } else {
+                icon.classList.remove('far', 'fa-star');
+                icon.classList.add('fa-solid', 'fa-heart');
+            }
+            alert('Failed to update favorite status. Please try again later.');
         }
-    }
+    });
 });

@@ -22,6 +22,9 @@
       text-decoration: underline;
     }
 
+    a.exit {
+      color: #578E7E;
+    }
   </style>
 </head>
 <body>
@@ -32,17 +35,27 @@
   <% } else { %>
     <ul>
       <% favorites.forEach(fav => { %>
-        <li>
-          <a class="favorite-link" href="https://www.themoviedb.org/movie/<%= fav.movieId %>" target="_blank">
-            <%= fav.title %>
-          </a>
-          <div><%= fav.release_date %></div>
-          <img src="https://image.tmdb.org/t/p/w200<%= fav.poster_path %>" alt="<%= fav.title %> poster">
-          <p><%= fav.overview %></p>
-        </li>
-      <% }) %>
+        <% if (fav.movieId || fav.bookId) { %>
+          <li>
+            <% if (fav.movieId) { %>
+              <a class="favorite-link" href="/Books&Co/movie.html?id=<%= fav.movieId %>" target="_blank">
+                <%= fav.title %>
+              </a>
+              <div><%= fav.release_date %></div>
+              <p><%= fav.overview %></p>
+            <% } else if (fav.bookId) { %>
+              <a class="favorite-link" href="/Books&Co/book.html?id=<%= fav.bookId %>" target="_blank">
+                <%= fav.title %>
+              </a>
+              <p><%= fav.description %></p>
+            <% } %>
+          </li>
+        <% } %>
+      <% }) %>    
     </ul>
+        
   <% } %>
-  <a href="/Books&Co/Index.html">← Back to Home</a>
+
+  <a class="exit" href="/Books&Co/Index.html">← Back to Home</a>
 </body>
 </html>

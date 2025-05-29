@@ -148,58 +148,35 @@
       <script src="bookgenerator.js"></script>
       <script src="moviegenerator.js"></script>
       <script src="searchresults.js"></script>
+      <script src="favorites.js"></script>
 
         <script>
- fetch('/api/profile')
-  .then(res => res.json())
-  .then(data => {
-    if (data.username) {
-      const loginLink = document.getElementById('login-link');
-      if (loginLink) {
-        loginLink.innerHTML = `
-          <div class="dropdown">
-            <a href="#" class="dropdown-toggle" style="color: #F5ECD5; font-weight: bold;">
-              Welcome, ${data.username} ▼
-            </a>
-            <ul class="dropdown-menu">
-              <li><a href="/history">History</a></li>
-              <li><a href="/favorites">Favorites</a></li>
-              <li><a href="/logout">Logout</a></li>
-            </ul>
-          </div>
-        `;
-      }
-    }
-  })
-  .catch(err => {
-    console.error('Failed to load username:', err);
-  });
+          fetch('/api/profile')
+            .then(res => res.json())
+            .then(data => {
+              if (data.username) {
+                const loginLink = document.getElementById('login-link');
+                if (loginLink) {
+                  loginLink.innerHTML = `
+                    <div class="dropdown">
+                      <a href="#" class="dropdown-toggle" style="color: #F5ECD5; font-weight: bold;">
+                        Welcome, ${data.username} ▼
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li><a href="/history">History</a></li>
+                        <li><a href="/favorites">Favorites</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                      </ul>
+                    </div>
+                  `;
+                }
+              }
+            })
+            .catch(err => {
+              console.error('Failed to load username:', err);
+            });
 
         </script>
-
-<script>
-  document.addEventListener("click", async function (e) {
-    if (e.target.classList.contains("favorite-btn")) {
-      const card = e.target.closest(".card");
-      const itemId = card.getAttribute("data-id");
-      const itemType = card.getAttribute("data-type"); // "book" or "movie"
-
-      const response = await fetch("/api/favorite", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ itemId, itemType })
-      });
-
-      if (response.ok) {
-        alert("Added to favorites!");
-      }
-    }
-  });
-</script>
-
-
              
 </body>
 </html>

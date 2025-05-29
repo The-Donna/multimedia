@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="Booksandco.css">
     <link rel="stylesheet" type="text/css" href="genre.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <title>Comedy</title>
+    <title>Fiction</title>
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -101,21 +101,43 @@
                             <h3>${title}</h3>
                             <p><strong>Author(s):</strong> ${authors}</p>
                             <p><strong>Description:</strong> ${description.substring(0, 300)}...</p>
+                            <button class="favorite-button" data-type="book" data-id="${book.id}" data-title="${encodeURIComponent(title)}" data-thumbnail="${encodeURIComponent(thumbnail)}" data-description="${encodeURIComponent(description)}">
+                                <i class="far fa-star"></i>
+                            </button>
                         `;
 
                         bookElement.addEventListener('click', (e) => {
-                            e.preventDefault();
+                            const isFavoriteClick = e.target.closest('.favorite-button');
+
+                            if (isFavoriteClick) {
+                                e.preventDefault(); 
+                                return;
+                            }
+
+                            e.preventDefault(); 
+
                             fetch('/api/history', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 credentials: 'include',
                                 body: JSON.stringify({
-                                    itemId: book.id || title,
+                                    itemId: book.id || title, 
                                     title,
                                     type: 'book'
                                 })
-                            }).catch(err => console.error("History error:", err));
-                            window.open(infoLink, '_blank');
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    console.error('Failed to log history:', response.statusText);
+                                }
+                            })
+                            .catch(err => console.error("History error:", err));
+
+                            if (infoLink) {
+                                window.location.href = `book.html?id=${book.id}`;
+                            } else {
+                                console.warn('infoLink not available for book:', title);
+                            }
                         });
 
                         bookElement.appendChild(contentDiv);
@@ -186,6 +208,9 @@
                                         <p><strong>Overview:</strong> ${overview}</p>
                                     </div>
                                 </a>
+                                <button class="favorite-button" data-type="movie" data-id="${movie.id}" data-title="${encodeURIComponent(movie.title)}" data-poster_path="${encodeURIComponent(posterUrl)}" data-overview="${encodeURIComponent(movie.overview)}" data-release_date="${encodeURIComponent(movie.release_date)}">
+                                    <i class="far fa-star"></i>
+                                </button>
                             `;
 
                             movieList.appendChild(movieDiv);
@@ -261,6 +286,7 @@
           });
     </script>
     <script src="searchresults.js"></script>
+    <script src="favorites.js"></script>
 
 
     <script>
