@@ -15,6 +15,7 @@ async function searchMedia(query) {
 
     const books = booksData.items?.map(item => ({
       type: 'book',
+      id: item.id,
       title: item.volumeInfo.title,
       authors: item.volumeInfo.authors,
       description: item.volumeInfo.description,
@@ -79,7 +80,7 @@ function displayResults(results) {
           credentials: 'include',
           body: JSON.stringify({ itemId: item.link, title: item.title, type: 'book' })
         }).finally(() => {
-          window.open(item.link, '_blank');
+          window.location.href = `book.html?id=${item.id}`;
         });
       };
 

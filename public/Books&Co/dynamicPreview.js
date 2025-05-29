@@ -20,8 +20,8 @@ function initializeGoogleBookViewer() {
             const title = data.volumeInfo.title || 'No Title Available';
             const overview = data.volumeInfo.description || 'No description available.';
 
-            document.getElementById('bookTitle').textContent = title;
-            document.getElementById('bookOverview').textContent = overview;
+            document.getElementById('bookTitle').innerHTML = title;
+            document.getElementById('bookOverview').innerHTML = overview;
         })
         .catch(err => {
             console.error('Failed to fetch book details:', err);
