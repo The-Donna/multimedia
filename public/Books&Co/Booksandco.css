@@ -352,8 +352,8 @@ img {
 
 body.dark-mode {
   background-color: #084E40;
-  border-color: #0F8F75;
-  color: #04CDA4;
+  border-color: #428562;
+  color: #66D39A;
 }
 
 .nav-container.dark-mode {
@@ -408,3 +408,4 @@ body.dark-mode {
   cursor: pointer;
   color: gold;
 }
+
