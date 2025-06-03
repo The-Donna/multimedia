@@ -18,11 +18,11 @@ router.post('/', ensureAuthenticated, async (req, res) => {
 
     if (!profile) {
       profile = new Profile({ user: userId, history: [], savedSearches: [] });
-      await profile.save(); // 🔥 You were missing this!
+      await profile.save(); 
     }
 
     profile.history.unshift({ title, type, itemId, dateViewed: new Date() });
-    await profile.save(); // 🔥 Save again after pushing
+    await profile.save(); 
 
     console.log("✅ History saved:", title);
     res.status(200).send('History updated');

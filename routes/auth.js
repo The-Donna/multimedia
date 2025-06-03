@@ -19,8 +19,6 @@ router.post('/signup', async (req, res, next) => {
   });
 });
 
-
-
 router.post('/login', (req, res, next) => {
 
   const { email, password } = req.body;
@@ -33,6 +31,5 @@ router.post('/login', (req, res, next) => {
     failureRedirect: '/login'
   })(req, res, next);
 });
-
 
 module.exports = router;

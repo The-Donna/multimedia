@@ -126,7 +126,7 @@
             <div id="moviesresults"></div>
             <script>
                 const API_KEY = 'removed'; 
-                const genreId = 35; // Comedy
+                const genreId = 35; 
                 const MOVIES_TO_FETCH = 24;
 
                 async function fetchExactlyMovies(limit) {
@@ -228,7 +228,7 @@
           }
         });
 
-        // Trigger search on Enter key
+
         searchBox.addEventListener('keydown', async (e) => {
           if (e.key === 'Enter') {
             e.preventDefault();
@@ -243,7 +243,7 @@
           }
         });
 
-        // Back button logic
+     
         backButton.addEventListener('click', () => {
           homepage.classList.remove('slide-left');
           resultspage.classList.remove('active');

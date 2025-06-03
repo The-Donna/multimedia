@@ -132,7 +132,7 @@
           }
         });
 
-        // Trigger search on Enter key
+      
         searchBox.addEventListener('keydown', async (e) => {
           if (e.key === 'Enter') {
             e.preventDefault();
@@ -147,7 +147,6 @@
           }
         });
 
-        // Back button logic
         backButton.addEventListener('click', () => {
           homepage.classList.remove('slide-left');
           resultspage.classList.remove('active');
@@ -175,7 +174,7 @@
           console.error('Failed to load username:', err);
         });
     </script>
-        <!-- 🟡 FOLLOW BUTTON + TOGGLE -->
+      
     <button id="toggleFollow" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; padding: 10px; background-color: #333; color: white; border: none; border-radius: 5px;" class="light" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> </button>
 
 

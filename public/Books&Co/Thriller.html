@@ -54,7 +54,7 @@
                 const apiKey = 'AIzaSyBrXyc5lfr3wRJR70zr65Kh0tm7fPIU2oM'; 
 
                 async function searchFictionBooks() {
-                    const genre = 'thriller'; // The genre you want to search
+                    const genre = 'thriller'; 
                     const maxResults = 24;
                     const url = `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&key=${apiKey}&maxResults=${maxResults}&_=${Date.now()}`;
                     try {
@@ -159,7 +159,7 @@
             <div id="moviesresults"></div>
             <script>
                 const API_KEY = 'removed'; 
-                const genreId = [53, 9648]; // Thriller/Mystery
+                const genreId = [53, 9648];
                 const MOVIES_TO_FETCH = 24;
 
                 async function fetchExactlyMovies(limit) {
@@ -174,7 +174,7 @@
                             if (data.results && data.results.length > 0) {
                                 allResults = allResults.concat(data.results);
                             } else {
-                                break; // no more results
+                                break; 
                             }
                         } catch (error) {
                             console.error(`Error fetching page ${page}:`, error);

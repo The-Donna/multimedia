@@ -159,7 +159,7 @@
             <div id="moviesresults"></div>
             <script>
                 const API_KEY = 'removed'; 
-                const genreId = 10749; // Romance
+                const genreId = 10749; 
                 const MOVIES_TO_FETCH = 24;
 
                 async function fetchExactlyMovies(limit) {
@@ -174,7 +174,7 @@
                             if (data.results && data.results.length > 0) {
                                 allResults = allResults.concat(data.results);
                             } else {
-                                break; // no more results
+                                break; 
                             }
                         } catch (error) {
                             console.error(`Error fetching page ${page}:`, error);
@@ -224,7 +224,7 @@
                     }
                 }
 
-                // Run it
+               
                 fetchExactlyMovies(MOVIES_TO_FETCH).then(displayMovies);
             </script>
 
@@ -261,7 +261,7 @@
           }
         });
 
-        // Trigger search on Enter key
+       
         searchBox.addEventListener('keydown', async (e) => {
           if (e.key === 'Enter') {
             e.preventDefault();
@@ -276,7 +276,7 @@
           }
         });
 
-        // Back button logic
+ 
         backButton.addEventListener('click', () => {
           homepage.classList.remove('slide-left');
           resultspage.classList.remove('active');

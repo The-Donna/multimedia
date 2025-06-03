@@ -11,38 +11,36 @@
         document.addEventListener("DOMContentLoaded", function() {
             const form = document.getElementById("contactForm");
 
-            // Handle form submission
             form.addEventListener("submit", function(event) {
-                event.preventDefault(); // Prevent the form from submitting normally
+                event.preventDefault();
 
-                // Get form values
                 const name = document.getElementById("name").value;
                 const email = document.getElementById("email").value;
                 const message = document.getElementById("message").value;
 
-                // Simple validation
+       
                 if (!name || !email || !message) {
                     alert("Please fill in all the fields.");
                     return;
                 }
 
-                // Optionally, you can validate the email format here
+       
                 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
                 if (!emailRegex.test(email)) {
                     alert("Please enter a valid email address.");
                     return;
                 }
 
-                // Simulate sending data (you can replace this with an AJAX request if needed)
+         
                 console.log("Form Submitted:");
                 console.log("Name:", name);
                 console.log("Email:", email);
                 console.log("Message:", message);
 
-                // After form submission, display a success message
+         
                 alert("Thank you for your submission!");
 
-                // Optionally, clear the form after submission
+               
                 form.reset();
             });
         });
@@ -80,7 +78,7 @@
         font-weight: bold;
     }
 
-    /* === SEARCH BAR === */
+    
     .search-container {
         display: flex;
         align-items: center;
@@ -110,7 +108,7 @@
         opacity: 1;
     }
 
-    /* === DROPDOWN MENU === */
+   
     .dropdown-menu {
         list-style-type: none;
         position: absolute;
@@ -249,7 +247,7 @@
             }
         });
 
-        // Trigger search on Enter key
+       
         searchBox.addEventListener('keydown', async (e) => {
             if (e.key === 'Enter') {
             e.preventDefault();
@@ -264,7 +262,7 @@
             }
         });
 
-        // Back button logic
+
         backButton.addEventListener('click', () => {
             homepage.classList.remove('slide-left');
             resultspage.classList.remove('active');
@@ -278,7 +276,7 @@
         });
     </script>
      <script src="searchresults.js"></script>
-        <!-- 🟡 FOLLOW BUTTON + TOGGLE -->
+    
     <button id="toggleFollow" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; padding: 10px; background-color: #333; color: white; border: none; border-radius: 5px;" class="light" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> </button>
 
     <script>

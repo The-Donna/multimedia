@@ -8,7 +8,7 @@ const HistoryItemSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-}, { _id: false }); // Optional: avoids creating _id for each subdoc
+}, { _id: false }); 
 
 const ProfileSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

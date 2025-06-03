@@ -1,4 +1,4 @@
-const apiKey = 'removed'; // Replace this with your TMDB API key
+const apiKey = 'removed'; 
         const maxPages = 500;
         const card = document.getElementById('movie-Card');
 
@@ -29,7 +29,7 @@ const apiKey = 'removed'; // Replace this with your TMDB API key
           
             const movieUrl = `https://www.themoviedb.org/movie/${movie.id}`;
           
-            // 🔥 Save to history
+       
             fetch('/api/history', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -59,6 +59,6 @@ const apiKey = 'removed'; // Replace this with your TMDB API key
           }
           
 
-        // Initial call + update every 10 seconds
+  
         getRandomMovie();
         setInterval(getRandomMovie, 10000);

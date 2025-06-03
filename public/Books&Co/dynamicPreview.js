@@ -39,7 +39,7 @@ function initializeGoogleBookViewer() {
     });
 }
 
-// Set a callback to run when the Google Books API is fully loaded
+
 google.books.setOnLoadCallback(initializeGoogleBookViewer);
 
 async function loadComments() {
