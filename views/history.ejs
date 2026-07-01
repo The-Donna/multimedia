@@ -43,7 +43,7 @@
             </a>
             (<%= item.type %>) - <%= item.dateViewed ? new Date(item.dateViewed).toDateString() : "Unknown Date" %>
           <% } else if (item.type === 'movie') { %>
-            <a class="history-link" href="/Books&Co/movie.html?id=<%= item.itemId %>">
+            <a class="history-link" href="/movie.html?id=<%= item.itemId %>">
               <%= item.title %>
             </a>
             (<%= item.type %>) - <%= item.dateViewed ? new Date(item.dateViewed).toDateString() : "Unknown Date" %>
@@ -55,6 +55,6 @@
     </ul>
   <% } %>
 
-  <a class="exit" href="/Books&Co/Index.html">← Back to Home</a>
+  <a class="exit" href="/Index.html">← Back to Home</a>
 </body>
 </html>

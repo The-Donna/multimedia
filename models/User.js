@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   googleId: String,
   username: String,
-  email: String,
+  email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   password: String
 });
 

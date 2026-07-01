@@ -7,4 +7,6 @@ const CommentSchema = new mongoose.Schema({
     timestamp: { type: Date, default: Date.now }
 });
 
+CommentSchema.index({ movieId: 1, timestamp: -1 });
+
 module.exports = mongoose.model('Comment', CommentSchema);

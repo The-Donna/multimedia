@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Your History</title>
+  <title>Your Favorites</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; background: #fdfaf4; color: #333; }
     h1 { color: #578E7E; }
@@ -38,13 +38,13 @@
         <% if (fav.movieId || fav.bookId) { %>
           <li>
             <% if (fav.movieId) { %>
-              <a class="favorite-link" href="/Books&Co/movie.html?id=<%= fav.movieId %>" target="_blank">
+              <a class="favorite-link" href="/movie.html?id=<%= fav.movieId %>" target="_blank">
                 <%= fav.title %>
               </a>
               <div><%= fav.release_date %></div>
               <p><%= fav.overview %></p>
             <% } else if (fav.bookId) { %>
-              <a class="favorite-link" href="/Books&Co/book.html?id=<%= fav.bookId %>" target="_blank">
+              <a class="favorite-link" href="/book.html?id=<%= fav.bookId %>" target="_blank">
                 <%= fav.title %>
               </a>
               <p><%= fav.description %></p>
@@ -56,6 +56,6 @@
         
   <% } %>
 
-  <a class="exit" href="/Books&Co/Index.html">← Back to Home</a>
+  <a class="exit" href="/Index.html">← Back to Home</a>
 </body>
 </html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { title: 'Movie' }) %>
+  <style>
+    .comment-box {
+      margin-top: 15px;
+    }
+
+    .comment {
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      padding: 10px;
+      color: #F5ECD5;
+      font-size: 17px;
+    }
+
+    #comments {
+      width: 75%;
+      margin: auto;
+      padding: 10px;
+      background-color: #578E7E;
+      border-radius: 20px;
+    }
+
+    input, textarea {
+      width: 60%;
+    }
+
+    #movie-container {
+      width: 75%;
+      margin: auto;
+      padding: 10px;
+    }
+
+    h3 {
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      font-size: 25px;
+      color: #F5ECD5;
+    }
+  </style>
+</head>
+<body>
+  <div id="homepage">
+    <%- include('partials/nav') %>
+
+    <div id="movie-container"></div>
+
+    <div id="comments">
+      <h3>Comments</h3>
+      <form id="comment-box">
+        <input type="text" id="username" placeholder="Your name"><br>
+        <textarea id="comment" rows="3" placeholder="Write a comment..."></textarea><br>
+        <button type="button" onclick="submitComment()">Post Comment</button>
+      </form><br>
+
+      <div id="comments-list"></div>
+    </div>
+
+    <br>
+    <br>
+
+    <%- include('partials/footer') %>
+  </div>
+
+  <%- include('partials/searchOverlay') %>
+
+  <%- include('partials/scripts') %>
+
+  <script src="/js/movie.js"></script>
+</body>
+</html>

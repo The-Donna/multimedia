@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { title: 'FAQ' }) %>
+  <style>
+    .answer {
+      display: none;
+    }
+
+    .question,
+    .answer {
+      font-family: Georgia, sans-serif, serif;
+      padding: 1%;
+      min-height: 35px;
+      width: 100%;
+      background-color: #FFFAEC;
+      border-radius: 25px;
+      overflow: hidden;
+    }
+  </style>
+  <script>
+    function drop(answerID) {
+      const ans = document.getElementById('answer' + answerID);
+      ans.style.display = (ans.style.display === 'none' || !ans.style.display) ? 'block' : 'none';
+    }
+  </script>
+</head>
+<body>
+  <div id="homepage">
+    <%- include('partials/nav') %>
+
+    <h1 class="one">Frequently Asked Questions</h1>
+
+    <p class="question" onclick="drop(1)"><strong>Where can I find some books to read or movies to watch?</strong></p>
+    <p class="answer" id="answer1">You can hover on the "Genre" button in the top left of the page, where you will see a menu that leads to a variety of books and movies to enjoy!</p>
+
+    <p class="question" onclick="drop(2)"><strong>Can I search for a book I've seen before?</strong></p>
+    <p class="answer" id="answer2">Yes! On the "Home" page, we have a search bar where you can type in the name of a book you know or keywords to find others similar.</p>
+
+    <p class="question" onclick="drop(3)"><strong>What if I don't know what to read or watch?</strong></p>
+    <p class="answer" id="answer3">We have made a generator for both books and movies for those who aren't sure what to watch or read or are simply feeling adventurous for something new!</p>
+
+    <p class="question" onclick="drop(4)"><strong>How can I see who made the website?</strong></p>
+    <p class="answer" id="answer4">You can click on the "About" button in the navigation bar to learn more about the developers and our backstory!</p>
+
+    <p class="question" onclick="drop(5)"><strong>How can I reach out and send a message about an issue or suggestion?</strong></p>
+    <p class="answer" id="answer5">You can reach us through our Contact Form. Click on the "Contact" button in the navigation bar and fill out the form, or use the Google Form if preferred.</p>
+
+    <p class="question" onclick="drop(6)"><strong>Where can I read books online for free?</strong></p>
+    <p class="answer" id="answer6">Open Library and Libby by OverDrive (using a library card) are great, fully legal ways to read books for free online.</p>
+
+    <p class="question" onclick="drop(7)"><strong>Are there places to watch movies for free online?</strong></p>
+    <p class="answer" id="answer7">Yes — Freevee and Tubi are legitimate, ad-supported streaming services with large free movie libraries.</p>
+
+    <%- include('partials/footer') %>
+  </div>
+
+  <%- include('partials/searchOverlay') %>
+
+  <%- include('partials/scripts') %>
+</body>
+</html>

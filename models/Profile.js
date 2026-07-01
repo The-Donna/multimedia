@@ -11,7 +11,7 @@ const HistoryItemSchema = new mongoose.Schema({
 }, { _id: false }); // Optional: avoids creating _id for each subdoc
 
 const ProfileSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", unique: true, index: true },
   savedSearches: [String],
   viewedBooks: [String],
   viewedMovies: [String],

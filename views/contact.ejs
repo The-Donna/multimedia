@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { title: 'Contact' }) %>
+</head>
+<body>
+  <div id="homepage">
+    <%- include('partials/nav') %>
+
+    <h1>Welcome to the Books&Co Contact Page</h1>
+
+    <h3>If you have any issues or just want to get in contact with the company, please fill out the form below.</h3>
+
+    <form action="submit_form.php" method="POST" id="contactForm">
+      <label for="name">Full Name:</label><br>
+      <input type="text" id="name" name="name" required><br><br>
+
+      <label for="email">Email Address:</label><br>
+      <input type="email" id="email" name="email" required><br><br>
+
+      <label for="message">Message:</label><br>
+      <textarea id="message" name="message" rows="5" cols="40" required></textarea><br><br>
+
+      <input type="submit" value="Submit">
+    </form>
+
+    <h4>Alternatively, you can access the full Contact Form here: </h4>
+    <a href="https://forms.gle/Cbv35nycDQ8845g16" target="_blank">Click here to access the Contact Form</a>
+
+    <%- include('partials/footer') %>
+  </div>
+
+  <%- include('partials/searchOverlay') %>
+
+  <%- include('partials/scripts') %>
+
+  <script src="/js/contact.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { title: genre.name }) %>
+  <link rel="stylesheet" type="text/css" href="/css/genre.css">
+</head>
+<body>
+  <div id="homepage">
+    <%- include('partials/nav') %>
+
+    <div class="container">
+      <h1>Books</h1>
+      <div id="bookresults"></div>
+
+      <br>
+      <br>
+
+      <h1>Movies</h1>
+      <div id="moviesresults"></div>
+    </div>
+
+    <%- include('partials/footer') %>
+  </div>
+
+  <%- include('partials/searchOverlay') %>
+
+  <script>
+    // Passed to genre.js so one script can drive every genre page
+    window.GENRE = {
+      slug: "<%= genre.slug %>",
+      name: "<%= genre.name %>",
+      googleSubject: "<%= genre.googleSubject %>",
+      tmdbGenreId: "<%= genre.tmdbGenreId %>"
+    };
+  </script>
+
+  <%- include('partials/scripts') %>
+
+  <script src="/js/favorites.js"></script>
+  <script src="/js/genre.js"></script>
+</body>
+</html>

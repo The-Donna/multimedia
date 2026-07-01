@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('removed', {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
 .then(() => console.log('MongoDB connected'))
 .catch((err) => console.error('MongoDB error:', err.message));
-

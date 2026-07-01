@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { title: 'Home' }) %>
+</head>
+<body>
+  <div id="homepage">
+    <%- include('partials/nav') %>
+
+    <section class="start">
+      <h1>Discover Amazing Books & Movies</h1>
+      <p>Explore the best stories from around the world</p>
+    </section>
+
+    <section class="random">
+      <div id="booksGenerator">
+        <h1>📖 Books</h1>
+        <div id="book-card" class="card">
+          <p>Loading book...</p>
+        </div>
+      </div>
+
+      <div id="movieGenerator">
+        <h1>🎬 Movies</h1>
+        <div id="movie-Card" class="movie-card">
+          <p>Loading movie...</p>
+        </div>
+      </div>
+    </section>
+
+    <%- include('partials/footer') %>
+  </div>
+
+  <%- include('partials/searchOverlay') %>
+
+  <%- include('partials/scripts') %>
+
+  <script src="/js/bookgenerator.js"></script>
+  <script src="/js/moviegenerator.js"></script>
+  <script src="/js/favorites.js"></script>
+</body>
+</html>

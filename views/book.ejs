@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { title: 'Book' }) %>
+  <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
+  <style>
+    .comment-box {
+      margin-top: 15px;
+    }
+
+    .comment {
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      padding: 10px;
+      color: #F5ECD5;
+      font-size: 17px;
+    }
+
+    #comments {
+      width: 75%;
+      margin: auto;
+      padding: 10px;
+      background-color: #578E7E;
+      border-radius: 20px;
+    }
+
+    #bookTitle, #samplePages, #bookOverview {
+      width: 75%;
+      margin: auto;
+      padding: 10px;
+    }
+
+    input, textarea {
+      width: 60%;
+    }
+
+    #samplePages {
+      width: 75%;
+      height: 600px;
+      margin: 20px auto;
+      border: 1px solid black;
+    }
+
+    h3 {
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      font-size: 25px;
+      color: #F5ECD5;
+    }
+  </style>
+</head>
+<body>
+  <div id="homepage">
+    <%- include('partials/nav') %>
+
+    <div id="bookTitle" style="font-size:24px; font-weight:bold; color:black; margin-top:20px;"></div>
+    <div id="samplePages"></div>
+    <div id="bookOverview" style="font-size:16px; color:black; margin-top:20px; font-family: 'Times New Roman', Times, serif;"></div>
+
+    <div id="comments">
+      <h3>Comments</h3>
+      <form id="comment-box">
+        <input type="text" id="username" placeholder="Your name"><br>
+        <textarea id="comment" rows="3" placeholder="Write a comment..."></textarea><br>
+        <button type="button" onclick="submitComment()">Post Comment</button>
+      </form><br>
+
+      <div id="comments-list"></div>
+    </div>
+
+    <br>
+    <br>
+
+    <%- include('partials/footer') %>
+  </div>
+
+  <%- include('partials/searchOverlay') %>
+
+  <%- include('partials/scripts') %>
+
+  <script src="/js/dynamicPreview.js"></script>
+</body>
+</html>
