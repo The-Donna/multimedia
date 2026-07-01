@@ -9,7 +9,7 @@ function ensureAuthenticated(req, res, next) {
 
 router.post('/', ensureAuthenticated, async (req, res) => {
   try {
-    console.log("Received favorite body:", req.body); //
+    console.log("Received favorite body:", req.body); 
     const favorite = new Favorites({
       userId: req.user._id, 
       ...req.body

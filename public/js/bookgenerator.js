@@ -36,7 +36,7 @@ function displayBook(book, rawData) {
 
   const itemId = rawData.id || book.infoLink || book.title;
 
-  // Save to history
+ 
   fetch('/api/history', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -53,7 +53,7 @@ function displayBook(book, rawData) {
     })
     .catch(err => console.error("❌ Error saving book to history:", err));
 
-  bookDisplay.innerHTML = ''; // clear previous
+  bookDisplay.innerHTML = ''; 
 
   const card = document.createElement('div');
   if (book.infoLink) card.onclick = () => window.open(book.infoLink, '_blank');
